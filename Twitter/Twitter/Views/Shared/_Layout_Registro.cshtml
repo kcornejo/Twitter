@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Themes Lab - Creative Laborator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="" name="description" />
+    <meta content="themes-lab" name="author" />
+    <link rel="shortcut icon" href="../assets/global/images/favicon.png">
+    @Styles.Render("~/Content/login")
+</head>
+<body class="account separate-inputs" data-page="login">
+    <!-- BEGIN LOGIN BOX -->
+    <div class="container" id="login-block">
+        <div class="row">
+            @RenderBody()
+            
+        </div>
+        <p class="account-copyright">
+            <span>Copyright © 2015 </span><span>THEMES LAB</span>.<span>All rights reserved.</span>
+        </p>
+        
+
+    </div>
+    @Scripts.Render("~/Content/login_js")
+</body>
+</html>
