@@ -14,6 +14,15 @@ namespace Twitter.Models
         private String clave;
         private DateTime fechaNacimiento;
         private String ubicacionImagen;
+        private ListaDoblementeEnlazada tweets_muro;
+        public ListaDoblementeEnlazada getTweetsMuro()
+        {
+            return tweets_muro;
+        }
+        public void setTweetsMuro(ListaDoblementeEnlazada tweets_muro)
+        {
+            this.tweets_muro = tweets_muro;
+        }
         public String getClave()
         {
             return clave;

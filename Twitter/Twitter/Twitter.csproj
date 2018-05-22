@@ -158,7 +158,10 @@
     </Compile>
     <Compile Include="Models\Arbol.cs" />
     <Compile Include="Models\Comparador.cs" />
+    <Compile Include="Models\ListaDoblementeEnlazada.cs" />
     <Compile Include="Models\Nodo.cs" />
+    <Compile Include="Models\NodoDoblementeEnlazado.cs" />
+    <Compile Include="Models\Tweet.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -143,6 +143,32 @@ namespace Twitter.Models
             }
             return nodo_menor;
         }
+        public void modifica_usuario(Usuario usuario)
+        {
+            nodo_raiz = this.ModificaUsuario(nodo_raiz, usuario);
+        }
+        public Nodo ModificaUsuario(Nodo nodo, Usuario usuario)
+        {
+            if (nodo != null)
+            {
+                if (nodo.getUsuario().getNickname() == usuario.getNickname())
+                {
+                    nodo.setUsuario(usuario);
+                    return nodo;
+                }
+                else if (Comparador.mayor_que(usuario, nodo.getUsuario()))
+                {
+                    nodo.setDerecha(ModificaUsuario(nodo.getDerecha(), usuario));
+                }
+                else if (Comparador.menor_que(usuario, nodo.getUsuario()))
+                {
+                    nodo.setIzquierda(ModificaUsuario(nodo.getIzquierda(), usuario));
+
+                }
+                return null;
+            }
+            return null;
+        }
         public Usuario valida_sesion(String nickname, String clave) {
             Usuario usuario_comodin = new Usuario("", clave, nickname, "", new DateTime());
             return Sesion(nodo_raiz, usuario_comodin);
