@@ -151,7 +151,7 @@ namespace Twitter.Models
         {
             if (nodo != null)
             {
-                if (nodo.getUsuario().getNickname() == usuario.getNickname())
+                if (nodo.getUsuario().nickname == usuario.nickname)
                 {
                     nodo.setUsuario(usuario);
                     return nodo;
@@ -178,7 +178,7 @@ namespace Twitter.Models
         {
             if (nodo != null)
             {
-                if (nodo.getUsuario().getNickname() == usuario.getNickname())
+                if (nodo.getUsuario().nickname == usuario.nickname)
                 {
                     return nodo.getUsuario();
                 }
@@ -203,9 +203,9 @@ namespace Twitter.Models
         public Usuario Sesion(Nodo nodo, Usuario usuario) { 
             if (nodo != null)
             {
-                if (nodo.getUsuario().getNickname() == usuario.getNickname())
+                if (nodo.getUsuario().nickname == usuario.nickname)
                 {
-                    if (nodo.getUsuario().getClave() == Usuario.GenerarSha1(usuario.getClave())){
+                    if (nodo.getUsuario().clave == Usuario.GenerarSha1(usuario.clave)){
                         return nodo.getUsuario();
                     }
                     return null;

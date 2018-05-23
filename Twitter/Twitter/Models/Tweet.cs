@@ -7,32 +7,20 @@ namespace Twitter.Models
 {
     public class Tweet
     {
-        private Usuario usuario;
-        private String contenido;
-        private DateTime fechaHora;
-        public void setUsuario(Usuario usuario)
+        public Usuario usuario { get; set; }
+        public String contenido { get; set; }
+        public DateTime fechaHora { get; set; }
+        public Tweet()
+        {
+            usuario = null;
+            contenido = "";
+            fechaHora = new DateTime();
+        }
+        public Tweet(Usuario usuario, String contenido)
         {
             this.usuario = usuario;
-        }
-        public Usuario getUsuario()
-        {
-            return usuario;
-        }
-        public void setContenido(String contenido)
-        {
             this.contenido = contenido;
-        }
-        public String getContenido()
-        {
-            return contenido;
-        }
-        public void setFechaHora(DateTime fechaHora)
-        {
-            this.fechaHora = fechaHora;
-        }
-        public DateTime getFechaHora()
-        {
-            return fechaHora;
+            this.fechaHora = new DateTime();
         }
     }
 }

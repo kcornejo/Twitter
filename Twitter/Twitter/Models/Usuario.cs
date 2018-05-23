@@ -11,75 +11,15 @@ namespace Twitter.Models
 {
     public class Usuario
     {
-        private String nombreCompleto;
-        private String nickname;
-        private String clave;
-        private DateTime fechaNacimiento;
-        private String ubicacionImagen;
-        private ListaDoblementeEnlazada tweets_muro;
-        private TablaHash seguidos;
-        private TablaHash seguidores;
-        public TablaHash getSeguidos() {
-            return seguidos;
-        }
-        public void setSeguidos(TablaHash seguidos)
-        {
-            this.seguidos = seguidos;
-        }
-        public TablaHash getSeguidores()
-        {
-            return seguidores;
-        }
-        public void setSeguidores(TablaHash seguidores)
-        {
-            this.seguidores = seguidores;
-        }
-        public ListaDoblementeEnlazada getTweetsMuro()
-        {
-            return tweets_muro;
-        }
-        public void setTweetsMuro(ListaDoblementeEnlazada tweets_muro)
-        {
-            this.tweets_muro = tweets_muro;
-        }
-        public String getClave()
-        {
-            return clave;
-        }
-        public void setClave(String clave)
-        {
-            this.clave = Usuario.GenerarSha1(clave); ;
-        }
-        public String getNombreCompleto() {
-            return nombreCompleto;
-        }
-        public void setNombreCompleto(String nombreCompleto)
-        {
-            this.nombreCompleto = nombreCompleto;
-        }
-        public String getNickname() {
-            return nickname;
-        }
-        public void setNickname(String nickname)
-        {
-            this.nickname = nickname;
-        }
-        public DateTime getFechaNacimiento()
-        {
-            return fechaNacimiento;
-        }
-        public void setFechaNacimiento(DateTime fechaNacimiento)
-        {
-            this.fechaNacimiento = fechaNacimiento;
-        }
-        public String getUbicacionImagen()
-        {
-            return ubicacionImagen;
-        }
-        public void setUbicacionImagen(String ubicacionImagen)
-        {
-            this.ubicacionImagen = ubicacionImagen;
-        }
+        
+        public String nombreCompleto { get; set; }
+        public String nickname { get; set; }
+        public String clave { get; set; }
+        public DateTime fechaNacimiento { get; set; }
+        public String ubicacionImagen { get; set; }
+        public ListaDoblementeEnlazada tweets_muro { get; set; }
+        public TablaHash seguidos { get; set; }
+        public TablaHash seguidores { get; set; }
         public Usuario() {
             nombreCompleto = "";
             nickname = "";

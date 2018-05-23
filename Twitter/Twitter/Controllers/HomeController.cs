@@ -10,7 +10,6 @@ namespace Twitter.Controllers
     {
         public ActionResult Index()
         {
-            Usuario.carga_tuits();
             return View();
         }
 

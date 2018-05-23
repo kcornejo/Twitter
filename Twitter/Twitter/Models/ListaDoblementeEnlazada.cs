@@ -37,7 +37,7 @@ namespace Twitter.Models
         }
         public NodoDoblementeEnlazado EliminarNodo(NodoDoblementeEnlazado nodo, Tweet tweet)
         {
-            if(nodo.getTweet().getContenido() == tweet.getContenido() && nodo.getTweet().getFechaHora() == tweet.getFechaHora())
+            if(nodo.getTweet().contenido == tweet.contenido && nodo.getTweet().fechaHora == tweet.fechaHora)
             {
                 nodo = nodo.getSiguiente();
                 if(nodo.getAnterior() != null)
