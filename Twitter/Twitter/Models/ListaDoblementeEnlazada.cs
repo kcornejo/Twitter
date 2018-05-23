@@ -31,5 +31,23 @@ namespace Twitter.Models
             ultimo.setSiguiente(nodo);
             ultimo = nodo;
         }
+        public void eliminar(Tweet tweet)
+        {
+            primero = this.EliminarNodo(primero, tweet);
+        }
+        public NodoDoblementeEnlazado EliminarNodo(NodoDoblementeEnlazado nodo, Tweet tweet)
+        {
+            if(nodo.getTweet().getContenido() == tweet.getContenido() && nodo.getTweet().getFechaHora() == tweet.getFechaHora())
+            {
+                nodo = nodo.getSiguiente();
+                if(nodo.getAnterior() != null)
+                {
+                    nodo.getAnterior().setSiguiente(nodo);
+                }
+            }else {
+                nodo.setSiguiente(EliminarNodo(nodo.getSiguiente(), tweet));
+            }
+            return nodo;
+        }
     }
 }

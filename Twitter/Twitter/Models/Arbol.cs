@@ -169,6 +169,33 @@ namespace Twitter.Models
             }
             return null;
         }
+        public Usuario obtiene_usuario(String nickname)
+        {
+            Usuario usuario = new Usuario("", "", nickname, "", new DateTime());
+            return ObtieneUsuario(nodo_raiz, usuario);
+        }
+        public Usuario ObtieneUsuario(Nodo nodo, Usuario usuario)
+        {
+            if (nodo != null)
+            {
+                if (nodo.getUsuario().getNickname() == usuario.getNickname())
+                {
+                    return nodo.getUsuario();
+                }
+                else if (Comparador.mayor_que(usuario, nodo.getUsuario()))
+                {
+                    return ObtieneUsuario(nodo.getDerecha(), usuario);
+                }
+                else if (Comparador.menor_que(usuario, nodo.getUsuario()))
+                {
+                    return ObtieneUsuario(nodo.getIzquierda(), usuario);
+
+                }
+                return null;
+            }
+            return null;
+        }
+
         public Usuario valida_sesion(String nickname, String clave) {
             Usuario usuario_comodin = new Usuario("", clave, nickname, "", new DateTime());
             return Sesion(nodo_raiz, usuario_comodin);
@@ -178,7 +205,7 @@ namespace Twitter.Models
             {
                 if (nodo.getUsuario().getNickname() == usuario.getNickname())
                 {
-                    if (nodo.getUsuario().getClave() == Usuario.GenerarSha1(usuario.getClave()){
+                    if (nodo.getUsuario().getClave() == Usuario.GenerarSha1(usuario.getClave())){
                         return nodo.getUsuario();
                     }
                     return null;

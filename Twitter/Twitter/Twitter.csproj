@@ -161,6 +161,7 @@
     <Compile Include="Models\ListaDoblementeEnlazada.cs" />
     <Compile Include="Models\Nodo.cs" />
     <Compile Include="Models\NodoDoblementeEnlazado.cs" />
+    <Compile Include="Models\TablaHash.cs" />
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -4013,6 +4014,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\XML\Tuits_usuarios.xml" />
+    <Content Include="Content\XML\Usuarios_seguidos.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -4440,6 +4443,7 @@
     <Content Include="Content\assets\global\plugins\visible\README.markdown" />
     <None Include="Views\Usuario\Login.cshtml" />
     <None Include="Views\Usuario\Registro.cshtml" />
+    <Content Include="Content\XML\Usuarios.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

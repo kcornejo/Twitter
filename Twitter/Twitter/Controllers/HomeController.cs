@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Twitter.Models;
 namespace Twitter.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+            Usuario.carga_tuits();
             return View();
         }
 

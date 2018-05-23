@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<!DOCTYPE main [
+  <!ELEMENT main (DATA_RECORD*)>
+  <!ELEMENT DATA_RECORD (NICK_NAME?,TUIT?)+>
+  <!ELEMENT NICK_NAME (#PCDATA)>
+  <!ELEMENT TUIT (#PCDATA)>
+]>
+<main>
+  <DATA_RECORD>
+    <NICK_NAME>ABANDA</NICK_NAME>
+    <TUIT>La confianza en s&#237; mismo es el primer secreto del &#233;xito.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABANDA</NICK_NAME>
+    <TUIT>Hay una fuerza motriz mas poderosa que el vapor, la electricidad y la energ&#237;a at&#243;mica. Esa fuerza es la voluntad</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABANDA</NICK_NAME>
+    <TUIT>La fuerza no viene de la capacidad corporal, sino de la voluntad del alma.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABANDA</NICK_NAME>
+    <TUIT>El mejor modo de predecir el futuro es invent&#225;ndolo</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABULL</NICK_NAME>
+    <TUIT>Si no luchas por lo que quieres, no te lamentes por lo que pierdes</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABULL</NICK_NAME>
+    <TUIT>Haz lo que puedas, con lo que tengas, donde est&#233;s.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABULL</NICK_NAME>
+    <TUIT>Solo aquellos que se atreven a tener grandes fracasos terminan consiguiendo grandes &#233;xitos.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ABULL</NICK_NAME>
+    <TUIT>Cualquiera que no este cometiendo errores es que no est&#225; intent&#225;ndolo lo suficiente.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ACABRIO</NICK_NAME>
+    <TUIT>Es duro fracasar, pero es todav&#237;a peor no haber intentado nunca triunfar.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ACABRIO</NICK_NAME>
+    <TUIT>El sabio puede sentarse en un hormiguero, pero solo el necio se queda sentado en &#233;l</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ACABRIO</NICK_NAME>
+    <TUIT>Si hoy no luchas, ma&#241;ana no llores</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>ACABRIO</NICK_NAME>
+    <TUIT>El verdadero buscador crece y aprende, y descubre que siempre es el principal responsable de lo que sucede.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AERRAZUR</NICK_NAME>
+    <TUIT>Todos tus sue&#241;os pueden hacerse realidad si tienes el coraje de perseguirlos.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AERRAZUR</NICK_NAME>
+    <TUIT>La Buena suerte es solo el pretexto de los fracasados</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AERRAZUR</NICK_NAME>
+    <TUIT>No te quedes sentado esperando que lleguen las cosas a ti. Lucha por lo que quieres, hazte responsable de ti mismo.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AERRAZUR</NICK_NAME>
+    <TUIT>El hombre bien preparado para la lucha ya ha conseguido medio triunfo</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AFRIPP</NICK_NAME>
+    <TUIT>La fuerza no viene de la capacidad corporal, sino de la voluntad del alma.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AFRIPP</NICK_NAME>
+    <TUIT>El mejor modo de predecir el futuro es invent&#225;ndolo</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AFRIPP</NICK_NAME>
+    <TUIT>El miedo no existe en otro lugar excepto en la mente.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AFRIPP</NICK_NAME>
+    <TUIT>&#191;Por que contentarnos con vivir a rastras cuando sentimos el anhelo de volar&#63;</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUNOLD</NICK_NAME>
+    <TUIT>Solo aquellos que se atreven a tener grandes fracasos terminan consiguiendo grandes &#233;xitos.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUNOLD</NICK_NAME>
+    <TUIT>Cualquiera que no este cometiendo errores es que no est&#225; intent&#225;ndolo lo suficiente.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUNOLD</NICK_NAME>
+    <TUIT>El fracaso es solo la oportunidad de comenzar de nuevo de forma m&#225;s inteligente.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUNOLD</NICK_NAME>
+    <TUIT>Tanto si crees que puedes hacerlo, como si no, en los dos casos tienes raz&#243;n.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUTTON</NICK_NAME>
+    <TUIT>Si hoy no luchas, ma&#241;ana no llores</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUTTON</NICK_NAME>
+    <TUIT>El verdadero buscador crece y aprende, y descubre que siempre es el principal responsable de lo que sucede.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUTTON</NICK_NAME>
+    <TUIT>Si tuvi&#233;ramos que hablar m&#225;s que escuchar, tendr&#237;amos dos bocas y solamente una oreja.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AHUTTON</NICK_NAME>
+    <TUIT>No puedes escapar de la responsabilidad de ma&#241;ana evadi&#233;ndola hoy.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AKHOO</NICK_NAME>
+    <TUIT>No te quedes sentado esperando que lleguen las cosas a ti. Lucha por lo que quieres, hazte responsable de ti mismo.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AKHOO</NICK_NAME>
+    <TUIT>El hombre bien preparado para la lucha ya ha conseguido medio triunfo</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AKHOO</NICK_NAME>
+    <TUIT>El no querer es la causa, el no poder el pretexto</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AKHOO</NICK_NAME>
+    <TUIT>Hay que seguir la lucha con lo que podamos hasta que podamos.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AMCEWEN</NICK_NAME>
+    <TUIT>El miedo no existe en otro lugar excepto en la mente.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AMCEWEN</NICK_NAME>
+    <TUIT>&#191;Por que contentarnos con vivir a rastras cuando sentimos el anhelo de volar&#63;</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AMCEWEN</NICK_NAME>
+    <TUIT>Los hombres no se hacen a partir de victorias f&#225;ciles, sino en base a grandes derrotas</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AMCEWEN</NICK_NAME>
+    <TUIT>Si quer&#233;is igualar a muchos, procura superar a todos en pureza de conducta y buenas formas</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AWALSH</NICK_NAME>
+    <TUIT>El fracaso es solo la oportunidad de comenzar de nuevo de forma m&#225;s inteligente.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AWALSH</NICK_NAME>
+    <TUIT>Tanto si crees que puedes hacerlo, como si no, en los dos casos tienes raz&#243;n.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>AWALSH</NICK_NAME>
+    <TUIT>Un campe&#243;n tiene miedo de perder. Los dem&#225;s tienen miedo de ganar.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>BERNST</NICK_NAME>
+    <TUIT>Si tuvi&#233;ramos que hablar m&#225;s que escuchar, tendr&#237;amos dos bocas y solamente una oreja.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>BERNST</NICK_NAME>
+    <TUIT>No puedes escapar de la responsabilidad de ma&#241;ana evadi&#233;ndola hoy.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>BERNST</NICK_NAME>
+    <TUIT>Cuando quieres algo, todo el universo conspira para que realices tu deseo</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>BEVERETT</NICK_NAME>
+    <TUIT>El no querer es la causa, el no poder el pretexto</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>BEVERETT</NICK_NAME>
+    <TUIT>Hay que seguir la lucha con lo que podamos hasta que podamos.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>BEVERETT</NICK_NAME>
+    <TUIT>No es lo que tu tienes, sino como usas lo que tienes lo que marca la diferencia.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>CDAVIES</NICK_NAME>
+    <TUIT>Los hombres no se hacen a partir de victorias f&#225;ciles, sino en base a grandes derrotas</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>CDAVIES</NICK_NAME>
+    <TUIT>Si quer&#233;is igualar a muchos, procura superar a todos en pureza de conducta y buenas formas</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>CDAVIES</NICK_NAME>
+    <TUIT>Sin sue&#241;os que hacer realidad, la vida no tiene sentido</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>CJOHNSON</NICK_NAME>
+    <TUIT>Un campe&#243;n tiene miedo de perder. Los dem&#225;s tienen miedo de ganar.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>CJOHNSON</NICK_NAME>
+    <TUIT>La confianza en s&#237; mismo es el primer secreto del &#233;xito.</TUIT>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <NICK_NAME>CJOHNSON</NICK_NAME>
+    <TUIT>Hay una fuerza motriz mas poderosa que el vapor, la electricidad y la energ&#237;a at&#243;mica. Esa fuerza es la voluntad</TUIT>
+  </DATA_RECORD>
+</main>
