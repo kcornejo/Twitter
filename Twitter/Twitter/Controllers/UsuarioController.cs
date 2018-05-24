@@ -19,16 +19,30 @@ namespace Twitter.Controllers
         {
             return View();
         }
-        public ActionResult Login()
+        public ActionResult Login(String mensaje)
         {
-            return View();
+            return View(mensaje);
+        }
+        public ActionResult Logout()
+        {
+            Session["Usuario"] = null;
+            return RedirectToAction("Login", "Usuario");
         }
         [HttpPost]
         public ActionResult ValidaLogin(Usuario usuario )
         {
-            Session["test"] = "123";
-            usuario.clave = "123";
-            return RedirectToAction("Index", "Home");
+            Arbol arbol = new Arbol();
+            Usuario valida = arbol.valida_sesion(usuario.nickname, usuario.clave);
+            Usuario nuevo_usuario = new Usuario("admin", Usuario.GenerarSha1("admin.12"), "admin", "", new DateTime());
+            arbol.insertar(nuevo_usuario);
+            arbol.recorre_arbol_in_orden_guardar();
+            if (valida != null)
+            {
+                Session["Usuario"] = usuario.nickname;
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Login", "Usuario");
         }
     }
 }

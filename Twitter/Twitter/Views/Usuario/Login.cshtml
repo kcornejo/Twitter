@@ -12,7 +12,7 @@
             <div style="display:none;">
                 @Html.LabelFor(u => u.nickname);
             </div>
-            @Html.TextBoxFor(u => u.nickname, new { @class = "form-control form-white username", placeholder = "Nickname" })
+            @Html.TextBoxFor(u => u.nickname, new { @class = "form-control form-white username", placeholder = "Nickname", autocomplete = "off" })
             <i class="icon-user"></i>
         </div>
         <div class="append-icon m-b-20">

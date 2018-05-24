@@ -17,5 +17,24 @@ namespace Twitter
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            HttpContext context = HttpContext.Current;
+            String url = context.Request.Url.ToString();
+            if (context.Session["Usuario"] == null)
+            {
+                if (!url.Contains("Usuario/Login") && !url.Contains("Usuario/ValidaLogin"))
+                {
+                    context.Response.Redirect("Usuario/Login");
+                }
+            }
+            else
+            {
+                if (url.Contains("Usuario/Login"))
+                {
+                    context.Response.Redirect("default.aspx");
+                }
+            }
+        }
     }
 }

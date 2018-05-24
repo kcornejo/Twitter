@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Twitter.Models
 {
     public class Arbol
     {
         private Nodo nodo_raiz;
+
+        public Arbol() {
+            carga_xml_usuario();
+        }
 
         public List<dynamic> listar() {
             var lista = new List<dynamic>();
@@ -222,6 +228,138 @@ namespace Twitter.Models
             }
             return null;
         }
+        public void carga_xml_usuario()
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(assemblyFile + "/../../Content/XML/Usuarios.xml");
+            XmlNodeList usuarios = xDoc.GetElementsByTagName("main");
+            XmlNodeList lista = ((XmlElement)usuarios[0]).GetElementsByTagName("DATA_RECORD");
+            String nombre = "";
+            String nickname = "";
+            DateTime fecha = new DateTime();
+            String foto = "";
+            String password = "";
+            Usuario usuario;
+            foreach (XmlElement nodo in lista)
+            {
+                nombre = "";
+                nickname = "";
+                fecha = new DateTime();
+                foto = "";
+                password = "";
+                XmlNodeList nNombre = nodo.GetElementsByTagName("NOMBRE");
+                nombre = nNombre[0].InnerText;
+                XmlNodeList nNickName = nodo.GetElementsByTagName("NICK_NAME");
+                nickname = nNickName[0].InnerText;
+                XmlNodeList nFecha = nodo.GetElementsByTagName("FECHA");
+                fecha = Convert.ToDateTime(nFecha[0].InnerText);
+                XmlNodeList nFoto = nodo.GetElementsByTagName("FOTO");
+                foto = nFoto[0].InnerText;
+                XmlNodeList nPassword = nodo.GetElementsByTagName("PASSWORD");
+                if(nPassword != null && nPassword[0] != null)
+                {
+                    password = nPassword[0].InnerText;
+                }
+                usuario = new Usuario(nombre, password, nickname, foto, fecha);
+                this.insertar(usuario);
+            }
+            
+        }
+        public void recorre_arbol_in_orden_guardar()
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Usuarios.xml");
+            writer.WriteStartElement("main");
+            this.RecorreArbolInOrdenGuardar(nodo_raiz, writer);
+            writer.WriteEndElement();
+            writer.Flush();
+            writer.Close();
+        }
+        public void RecorreArbolInOrdenGuardar(Nodo nodo, XmlWriter writer) {
+            if(nodo.getIzquierda() != null)
+            {
+                RecorreArbolInOrdenGuardar(nodo.getIzquierda(), writer);
+            }
+            if(nodo.getUsuario() != null)
+            {
+                writer.WriteStartElement("DATA_RECORD");
+                writer.WriteElementString("NOMBRE", nodo.getUsuario().nombreCompleto);
+                writer.WriteElementString("NICK_NAME", nodo.getUsuario().nickname);
+                writer.WriteElementString("FECHA", String.Format("{0:yyyy/MM/dd HH:mm:ss}", nodo.getUsuario().fechaNacimiento));
+                writer.WriteElementString("FOTO", nodo.getUsuario().ubicacionImagen);
+                writer.WriteElementString("PASSWORD", nodo.getUsuario().clave);
+                writer.WriteEndElement();
+            }
+            if (nodo.getDerecha() != null)
+            {
+                RecorreArbolInOrdenGuardar(nodo.getDerecha(), writer);
+            }
+        }
+        public static void carga_xml_tuits()
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(assemblyFile + "/../../Content/XML/Tuits_usuarios.xml");
+            XmlNodeList usuarios = xDoc.GetElementsByTagName("main");
+            XmlNodeList lista = ((XmlElement)usuarios[0]).GetElementsByTagName("DATA_RECORD");
+            String nickname = "";
+            String tuit = "";
+            foreach (XmlElement nodo in lista)
+            {
+                XmlNodeList nNickName = nodo.GetElementsByTagName("NICK_NAME");
+                nickname = nNickName[0].InnerText;
+                XmlNodeList nTuit = nodo.GetElementsByTagName("TUIT");
+                tuit = nTuit[0].InnerText;
 
+            }
+        }
+        public static void inserta_xml_tuits()
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Tuits_usuarios.xml");
+            writer.WriteStartElement("main");
+            for (int i = 0; i < 3; i++)
+            {
+                writer.WriteStartElement("DATA_RECORD");
+                writer.WriteElementString("NICK_NAME", "2");
+                writer.WriteElementString("TUIT", "2");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.Flush();
+        }
+        public static void carga_xml_seguidores()
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(assemblyFile + "/../../Content/XML/Usuarios_seguidos.xml");
+            XmlNodeList usuarios = xDoc.GetElementsByTagName("main");
+            XmlNodeList lista = ((XmlElement)usuarios[0]).GetElementsByTagName("DATA_RECORD");
+            String nickname = "";
+            String nicknameSeguido = "";
+            foreach (XmlElement nodo in lista)
+            {
+                XmlNodeList nNickName = nodo.GetElementsByTagName("USUARIO");
+                nickname = nNickName[0].InnerText;
+                XmlNodeList nNickNameSeguido = nodo.GetElementsByTagName("USUARIO_SEGUIDO");
+                nicknameSeguido = nNickNameSeguido[0].InnerText;
+            }
+        }
+        public static void inserta_xml_seguidores()
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Usuarios_seguidos.xml");
+            writer.WriteStartElement("main");
+            for (int i = 0; i < 3; i++)
+            {
+                writer.WriteStartElement("DATA_RECORD");
+                writer.WriteElementString("USUARIO", "2");
+                writer.WriteElementString("USUARIO_SEGUIDO", "2");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.Flush();
+        }
     }
 }

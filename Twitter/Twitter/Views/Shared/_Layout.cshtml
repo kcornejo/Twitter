@@ -6,7 +6,7 @@
     <meta name="description" content="admin-themes-lab">
     <meta name="author" content="themes-lab">
     <link rel="shortcut icon" href="~/Content/assets/global/images/favicon.png" type="image/png">
-    <title>Make Admin Template &amp; Builder</title>
+    <title>Twitter/UMG</title>
     @Styles.Render("~/Content/assets/global/css")
     @Styles.Render("~/Content/assets/admin/layout4/css")
     @Scripts.Render("~/Content/assets/global/plugins/modernizr")
@@ -112,14 +112,14 @@
                         <li class="dropdown" id="user-header">
                             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <img src="~/Content/assets/global/images/avatars/user1.png" alt="user image">
-                                <span class="username">Hi, John Doe</span>
+                                <span class="username">@Session["Usuario"]</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="#"><i class="icon-user"></i><span>Mi Perfil</span></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="icon-logout"></i><span>Cerrar Sesion</span></a>
+                                    <a href="@Url.Action("Logout", "Usuario")"><i class="icon-logout"></i><span>Cerrar Sesion</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -153,12 +153,7 @@
                 <div class="footer">
                     <div class="copyright">
                         <p class="pull-left sm-pull-reset">
-                            <span>Copyright <span class="copyright">©</span> 2016 </span>
-                            <span>THEMES LAB</span>.
-                            <span>All rights reserved. </span>
-                        </p>
-                        <p class="pull-right sm-pull-reset">
-                            <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+                            <span>Copyright © @DateTime.Now.Year </span><span>UMG</span>
                         </p>
                     </div>
                 </div>
