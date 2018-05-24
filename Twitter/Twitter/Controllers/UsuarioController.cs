@@ -36,6 +36,8 @@ namespace Twitter.Controllers
             Usuario nuevo_usuario = new Usuario("admin", Usuario.GenerarSha1("admin.12"), "admin", "", new DateTime());
             arbol.insertar(nuevo_usuario);
             arbol.recorre_arbol_in_orden_guardar();
+            Usuario prueba = arbol.obtiene_usuario("ABANDA");
+            
             if (valida != null)
             {
                 Session["Usuario"] = usuario.nickname;

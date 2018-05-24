@@ -14,6 +14,7 @@ namespace Twitter.Models
 
         public Arbol() {
             carga_xml_usuario();
+            carga_xml_seguidores();
         }
 
         public List<dynamic> listar() {
@@ -171,9 +172,9 @@ namespace Twitter.Models
                     nodo.setIzquierda(ModificaUsuario(nodo.getIzquierda(), usuario));
 
                 }
-                return null;
+                return nodo;
             }
-            return null;
+            return nodo;
         }
         public Usuario obtiene_usuario(String nickname)
         {
@@ -296,7 +297,7 @@ namespace Twitter.Models
                 RecorreArbolInOrdenGuardar(nodo.getDerecha(), writer);
             }
         }
-        public static void carga_xml_tuits()
+        public void carga_xml_tuits()
         {
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             XmlDocument xDoc = new XmlDocument();
@@ -329,7 +330,7 @@ namespace Twitter.Models
             writer.WriteEndElement();
             writer.Flush();
         }
-        public static void carga_xml_seguidores()
+        public void carga_xml_seguidores()
         {
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             XmlDocument xDoc = new XmlDocument();
@@ -338,28 +339,86 @@ namespace Twitter.Models
             XmlNodeList lista = ((XmlElement)usuarios[0]).GetElementsByTagName("DATA_RECORD");
             String nickname = "";
             String nicknameSeguido = "";
+            Usuario usuario;
+            Usuario usuarioSeguido;
             foreach (XmlElement nodo in lista)
             {
                 XmlNodeList nNickName = nodo.GetElementsByTagName("USUARIO");
                 nickname = nNickName[0].InnerText;
                 XmlNodeList nNickNameSeguido = nodo.GetElementsByTagName("USUARIO_SEGUIDO");
                 nicknameSeguido = nNickNameSeguido[0].InnerText;
+                usuario = this.obtiene_usuario(nickname);
+                usuarioSeguido = this.obtiene_usuario(nicknameSeguido);
+                if(usuario!= null && usuarioSeguido != null)
+                {
+                    usuario.seguidos.Insertar(usuarioSeguido, usuarioSeguido.nickname.GetHashCode());
+                    usuarioSeguido.seguidores.Insertar(usuario, usuario.nickname.GetHashCode());
+                }
             }
         }
-        public static void inserta_xml_seguidores()
+        public void recorre_arbol_in_orden_seguidores()
         {
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Usuarios_seguidos.xml");
             writer.WriteStartElement("main");
-            for (int i = 0; i < 3; i++)
-            {
-                writer.WriteStartElement("DATA_RECORD");
-                writer.WriteElementString("USUARIO", "2");
-                writer.WriteElementString("USUARIO_SEGUIDO", "2");
-                writer.WriteEndElement();
-            }
+            this.RecorreArbolInOrdenSeguidores(nodo_raiz, writer);
             writer.WriteEndElement();
             writer.Flush();
+            writer.Close();
+        }
+        public void seguir(String usuario, String usuarioSeguir)
+        {
+            Usuario objetoUsuario = this.obtiene_usuario(usuario);
+            Usuario objetoUsuarioSeguir = this.obtiene_usuario(usuarioSeguir);
+            if(objetoUsuarioSeguir != null && objetoUsuario != null)
+            {
+                objetoUsuario.seguidos.Insertar(objetoUsuarioSeguir, objetoUsuarioSeguir.nickname.GetHashCode());
+                this.modifica_usuario(objetoUsuario);
+                objetoUsuarioSeguir.seguidores.Insertar(objetoUsuario, objetoUsuario.nickname.GetHashCode());
+                this.modifica_usuario(objetoUsuarioSeguir);
+                this.recorre_arbol_in_orden_seguidores();
+            }
+        }
+        public void agregar_usuario(Usuario usuario)
+        {
+            this.insertar(usuario);
+            this.recorre_arbol_in_orden_guardar();
+        }
+
+        public void RecorreArbolInOrdenSeguidores(Nodo nodo, XmlWriter writer)
+        {
+            if(nodo != null)
+            {
+                if (nodo.getIzquierda() != null)
+                {
+                    RecorreArbolInOrdenSeguidores(nodo.getIzquierda(), writer);
+                }
+                if (nodo.getUsuario() != null)
+                {
+                    for (int i = 0; i <= 1026; i++)
+                    {
+                        if (nodo.getUsuario().seguidores.Buscar(i) != null)
+                        {
+                            writer.WriteStartElement("DATA_RECORD");
+                            writer.WriteElementString("USUARIO", nodo.getUsuario().seguidores.Buscar(i).nickname);
+                            writer.WriteElementString("USUARIO_SEGUIDO", nodo.getUsuario().nickname);
+                            writer.WriteEndElement();
+                        }
+                        if (nodo.getUsuario().seguidos.Buscar(i) != null)
+                        {
+                            writer.WriteStartElement("DATA_RECORD");
+                            writer.WriteElementString("USUARIO", nodo.getUsuario().nickname);
+                            writer.WriteElementString("USUARIO_SEGUIDO", nodo.getUsuario().seguidos.Buscar(i).nickname);
+                            writer.WriteEndElement();
+                        }
+                    }
+                }
+                if (nodo.getDerecha() != null)
+                {
+                    RecorreArbolInOrdenSeguidores(nodo.getDerecha(), writer);
+                }
+            }
+            
         }
     }
 }

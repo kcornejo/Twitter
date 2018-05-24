@@ -10,17 +10,24 @@ namespace Twitter.Models
         public static readonly int M = 1027;
 
         int Posicion;
-        Object[] tabla = new Object[M];
+        Usuario[] tabla = new Usuario[M];
 
         public int HashMod(int x)
         {
             return x % M;
         }
 
-        public void Insertar(Object Dato, int Clave)
+        public void Insertar(Usuario Dato, int Clave)
         {
+            if(Clave < 0)
+            {
+                Clave = Clave * -1;
+            }
             Posicion = HashMod(Clave);
-            tabla[Posicion] = Dato;
+            if(Posicion < 1027)
+            {
+                tabla[Posicion] = Dato;
+            }
         }
 
         public void Eliminar(int Clave)
@@ -29,7 +36,7 @@ namespace Twitter.Models
             tabla[Posicion] = null;
         }
 
-        public object Buscar(int Clave)
+        public Usuario Buscar(int Clave)
         {
             Posicion = HashMod(Clave);
             return tabla[Posicion];
