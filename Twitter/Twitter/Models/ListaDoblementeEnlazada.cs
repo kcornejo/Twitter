@@ -26,7 +26,7 @@ namespace Twitter.Models
             else
             {
                 nodo.anterior = ultimo;
-                ultimo.siguiente = nodo;
+                nodo.anterior.siguiente = nodo;
                 ultimo = nodo;
             }
         }

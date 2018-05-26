@@ -37,7 +37,8 @@ namespace Twitter.Models
                 Clave = Clave * -1;
             }
             Posicion = HashMod(Clave);
-            tabla[Posicion] = null;
+            if (Posicion < 1027)
+                tabla[Posicion] = null;
         }
 
         public Usuario Buscar(int Clave)
@@ -47,7 +48,9 @@ namespace Twitter.Models
                 Clave = Clave * -1;
             }
             Posicion = HashMod(Clave);
-            return tabla[Posicion];
+            if (Posicion < 1027)
+                return tabla[Posicion];
+            return null;
         }
     }
 }

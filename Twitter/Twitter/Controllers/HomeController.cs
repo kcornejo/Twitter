@@ -95,6 +95,47 @@ namespace Twitter.Controllers
             arbol.inserta_xml_tuits();
             return new EmptyResult();
         }
+        public ActionResult EliminarTuit(String contenido, String tiempo)
+        {
+            Arbol arbol = new Arbol();
+            String username = Session["Usuario"].ToString();
+            Usuario usuario = arbol.obtiene_usuario(username);
+            NodoDoblementeEnlazado primero = usuario.tweets_muro.primero;
+            DateTime fechaTuit = DateTime.ParseExact(tiempo, "d/M/yyyy H:m",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+            Tweet tweet = null;
+            while (primero != null)
+            {
+                tweet = primero.tweet;
+                if (tweet != null && tweet.usuario.nickname == username && tweet.contenido == contenido && tweet.fechaHora.Year == fechaTuit.Year && tweet.fechaHora.Month == fechaTuit.Month && tweet.fechaHora.Day == fechaTuit.Day && tweet.fechaHora.Hour == fechaTuit.Hour && tweet.fechaHora.Minute == fechaTuit.Minute)
+                {
+                    break;
+                }
+                primero = primero.siguiente;
+
+            }
+            if(tweet != null)
+            {
+                usuario.tweets_muro.eliminar(tweet);
+                arbol.modifica_usuario(usuario);
+                arbol.inserta_xml_tuits();
+                for (int i = 0; i< 1027; i++)
+                {
+                    if(usuario.seguidores.Buscar(i) != null)
+                    {
+                        usuario.seguidores.Buscar(i).tweets_muro.eliminar(tweet);
+                        arbol.modifica_usuario(usuario.seguidores.Buscar(i));
+                        arbol.inserta_xml_tuits();
+                    }
+                }
+                Session["Mensaje_Exito"] = "Tweet Eliminado";
+            }
+            else
+            {
+                Session["Mensaje_Error"] = "Tweet no encontrado";
+            }
+            return RedirectToAction("Index", "Home");
+        }
         public ActionResult ListadoTuit()
         {
             Arbol arbol = new Arbol();
@@ -111,20 +152,23 @@ namespace Twitter.Controllers
             NodoDoblementeEnlazado ultimo = usuario.tweets_muro.ultimo;
             int contador = 0;
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
-            while (ultimo != null)
+            List<Tweet> listado_tweet = new List<Tweet>();
+            //filling the counts
+            
+            while(ultimo != null)
             {
-                listado[contador,0] = ultimo.tweet.contenido;
-                listado[contador, 1] = ultimo.tweet.usuario.nombreCompleto;
-                Session["Usuario"] = usuario.nombreCompleto;
-                string imagen = "avatar1.png";
-                if (System.IO.File.Exists(assemblyFile + "/../../Content/img/" + ultimo.tweet.usuario.ubicacionImagen))
-                {
-                    imagen = ultimo.tweet.usuario.ubicacionImagen;
-                }
-                listado[contador, 2] = imagen;
-                listado[contador, 3] = ultimo.tweet.usuario.nickname;
-                listado[contador, 4] = ultimo.tweet.fechaHora.Day + "/" + ultimo.tweet.fechaHora.Month +"/"+ ultimo.tweet.fechaHora.Year +" "+ ultimo.tweet.fechaHora.Hour +":"+ ultimo.tweet.fechaHora.Minute;
+                listado_tweet.Add(ultimo.tweet);
                 ultimo = ultimo.anterior;
+            }
+            listado_tweet = listado_tweet.OrderByDescending(lc => lc.fechaHora).ToList();
+            ultimo = usuario.tweets_muro.ultimo;
+            foreach(var tweet in listado_tweet)
+            {
+                listado[contador, 0] = tweet.contenido;
+                listado[contador, 1] = tweet.usuario.nombreCompleto;
+                listado[contador, 2] = tweet.usuario.ubicacionSinErrorImagen();
+                listado[contador, 3] = tweet.usuario.nickname;
+                listado[contador, 4] = tweet.fechaHora.Day + "/" + tweet.fechaHora.Month + "/" + tweet.fechaHora.Year + " " + tweet.fechaHora.Hour + ":" + tweet.fechaHora.Minute;
                 contador++;
             }
             string json = JsonConvert.SerializeObject(listado);

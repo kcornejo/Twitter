@@ -91,8 +91,7 @@
         $.get("@Url.Action("ListadoTuitPropios", "Home")", null, function (response) {
             $("#listado").html("");
             $.each(response, function (i, item) {
-                //$("#listado").append("<table class='table'><tr><td><img src='/Content/img/" + item[2] + "'/></td><td>" + item[1] + "</td></tr><tr><td colspan='2'>" + item[0] + "</td></tr></table>")
-                $("#listado").append("<div class='row' onclick=\"location.href='@Url.Action("PerfilExterno", "Home")?username="+item[3]+"'\"><div class='col-md-2'><img width='40px' class='img-circle' height='40px' src='/Content/img/" + item[2] + "'/></div><div class='col-md-8'><b>" + item[1]+"</b> ("+item[3]+")<br/>"+item[0]+"</div><div class='col-md-2'>"+item[4]+"</div></div><hr/>")
+                $("#listado").append("<div class='row' onclick=\"location.href='@Url.Action("PerfilExterno", "Home")?username=" + item[3] + "'\"><div class='col-md-2'><img width='40px' class='img-circle' height='40px' src='/Content/img/" + item[2] + "'/></div><div class='col-md-8'><b>" + item[1] + "</b> (" + item[3] + ")<br/>" + item[0] + "</div><div class='col-md-2'>" + item[4] + "<a class='btn' href='@Url.Action("EliminarTuit", "Home")?contenido=" + item[0] + "&tiempo=" + item[4] + "'>X</a></div></div><hr/>")
             });
         }, 'json');
     }
