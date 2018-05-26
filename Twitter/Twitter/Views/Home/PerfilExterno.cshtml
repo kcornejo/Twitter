@@ -1,0 +1,124 @@
+﻿@model Twitter.Models.Usuario
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Twitter.Models.Arbol arbol = new Twitter.Models.Arbol();
+    Twitter.Models.Usuario usuario_actual = arbol.obtiene_usuario(Session["Usuario"].ToString());
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+
+                    <td width="20%" rowspan="4"><img width="40px" height="40px" src="~/Content/img/@Model.ubicacionSinErrorImagen()" alt="user image"></td>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td> @Model.nombreCompleto</td>
+                </tr>
+                <tr>
+                    <td> Usuario: </td>
+                    <td>@Model.nickname</td>
+                </tr>
+                <tr>
+                    <td> Nacimiento: </td>
+                    <td>@Model.fechaNacimiento.Day / @Model.fechaNacimiento.Month / @Model.fechaNacimiento.Year </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th align="center">Tweets</th>
+                            <th>Siguiendo</th>
+                            <th>Seguidores</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th align="center" onclick="location.href='@Url.Action("PerfilExterno", "Home", new { username = Model.nickname })'">@Model.cantidadTweets()</th>
+                            <th align="center" onclick="location.href='@Url.Action("Seguidos", "Home", new { username = Model.nickname })'">@Model.cantidadSeguidos()</th>
+                            <th align="center" onclick="location.href='@Url.Action("Seguidores", "Home", new { username = Model.nickname })'">@Model.cantidadSeguidores()</th>
+                            <th>
+                                @{
+
+                                    if (usuario_actual.busca_seguidos(Model))
+                                    {
+                                        <a class="btn btn-danger" href="@Url.Action("Seguir", "Home", new { nickname = Model.nickname })">
+                                            <i class="fa fa-minus"></i> Eliminar
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-blue" href="@Url.Action("Seguir", "Home", new { nickname = Model.nickname })">
+                                            <i class="fa fa-plus"></i> Seguir
+                                        </a>
+                                    }
+                                }
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <hr />
+                <br />
+                <div id="listado">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h3>A Quien Seguir</h3>
+        <hr />
+        @foreach (var item in usuario_actual.recomendaciones())
+    {
+        if (item != null)
+        {
+            <div class="row" onclick="location.href='@Url.Action("PerfilExterno", "Home", new{ username = item.nickname })'">
+                <div class="col-md-3">
+                    <img width="40px" height="40px" class="img-circle" src="~/Content/img/@item.ubicacionSinErrorImagen()" alt="user image">
+
+                </div>
+                <div class="col-md-6">
+                    <p>@item.nickname</p>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-blue" href="@Url.Action("Seguir", "Home", new { nickname = item.nickname})">
+                        <i class="fa fa-plus"></i>
+                        Seguir
+                    </a>
+                </div>
+            </div>
+    }
+
+}
+    </div>
+</div>
+<script src="~/Content/assets/global/plugins/jquery/jquery-3.1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function actualiza_tuits() {
+        $.get("@Url.Action("ListadoTuitExternos", "Home")", {username: "@Model.nickname"}, function (response) {
+            $("#listado").html("");
+            $.each(response, function (i, item) {
+                $("#listado").append("<div class='row' onclick=\"location.href='@Url.Action("PerfilExterno", "Home")?username="+item[3]+"'\"><div class='col-md-2'><img width='40px' class='img-circle' height='40px' src='/Content/img/" + item[2] + "'/></div><div class='col-md-8'><b>" + item[1]+"</b> ("+item[3]+")<br/>"+item[0]+"</div><div class='col-md-2'>"+item[4]+"</div></div><hr/>")
+            });
+        }, 'json');
+    }
+    $(document).ready(function () {
+        actualiza_tuits();
+    })
+</script>

@@ -7,29 +7,47 @@ namespace Twitter.Models
 {
     public class ListaDoblementeEnlazada
     {
-        private NodoDoblementeEnlazado primero;
-        private NodoDoblementeEnlazado ultimo;
-        public void setPrimero(NodoDoblementeEnlazado primero)
+        public NodoDoblementeEnlazado primero { get; set; }
+        public NodoDoblementeEnlazado ultimo { get; set; }
+
+        public ListaDoblementeEnlazada()
         {
-            this.primero = primero;
+            primero = null;
+            ultimo = null;
         }
-        public NodoDoblementeEnlazado getPrimero()
-        {
-            return primero;
-        }
-        public void setUltimo(NodoDoblementeEnlazado ultimo)
-        {
-            this.ultimo = ultimo;
-        }
-        public NodoDoblementeEnlazado getUltimo()
-        {
-            return ultimo;
-        }
+       
         public void insertar(NodoDoblementeEnlazado nodo)
         {
-            nodo.setAnterior(ultimo);
-            ultimo.setSiguiente(nodo);
-            ultimo = nodo;
+            if(primero == null || ultimo == null)
+            {
+                primero = nodo;
+                ultimo = nodo;
+            }
+            else
+            {
+                nodo.anterior = ultimo;
+                ultimo.siguiente = nodo;
+                ultimo = nodo;
+            }
+        }
+        public void insertarTweet(Tweet tweet)
+        {
+            NodoDoblementeEnlazado nodo = new NodoDoblementeEnlazado();
+            nodo.tweet = tweet;
+            this.insertar(nodo);
+            for (int i = 0; i <= 1026; i++)
+            {
+                if (tweet.usuario.seguidores.Buscar(i) != null)
+                {
+                    tweet.usuario.seguidores.Buscar(i).tweets_muro.insertarTweetOtro(tweet);
+                }
+            }
+        }
+        public void insertarTweetOtro(Tweet tweet)
+        {
+            NodoDoblementeEnlazado nodo = new NodoDoblementeEnlazado();
+            nodo.tweet = tweet;
+            this.insertar(nodo);
         }
         public void eliminar(Tweet tweet)
         {
@@ -37,15 +55,15 @@ namespace Twitter.Models
         }
         public NodoDoblementeEnlazado EliminarNodo(NodoDoblementeEnlazado nodo, Tweet tweet)
         {
-            if(nodo.getTweet().contenido == tweet.contenido && nodo.getTweet().fechaHora == tweet.fechaHora)
+            if(nodo.tweet.contenido == tweet.contenido && nodo.tweet.fechaHora == tweet.fechaHora)
             {
-                nodo = nodo.getSiguiente();
-                if(nodo.getAnterior() != null)
+                nodo = nodo.siguiente;
+                if(nodo.anterior != null)
                 {
-                    nodo.getAnterior().setSiguiente(nodo);
+                    nodo.anterior.siguiente = nodo;
                 }
             }else {
-                nodo.setSiguiente(EliminarNodo(nodo.getSiguiente(), tweet));
+                nodo.siguiente = EliminarNodo(nodo.siguiente, tweet);
             }
             return nodo;
         }

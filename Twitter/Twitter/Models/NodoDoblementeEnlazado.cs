@@ -7,31 +7,13 @@ namespace Twitter.Models
 {
     public class NodoDoblementeEnlazado
     {
-        private NodoDoblementeEnlazado siguiente;
-        private NodoDoblementeEnlazado anterior;
-        private Tweet tweet;
-        public void setSiguiente(NodoDoblementeEnlazado siguiente)
-        {
-            this.siguiente = siguiente;
-        }
-        public NodoDoblementeEnlazado getSiguiente() {
-            return siguiente;
-        }
-        public void setAnterior(NodoDoblementeEnlazado anterior)
-        {
-            this.anterior = anterior;
-        }
-        public NodoDoblementeEnlazado getAnterior()
-        {
-            return anterior;
-        }
-        public void setTweet(Tweet tweet)
-        {
-            this.tweet = tweet;
-        }
-        public Tweet getTweet()
-        {
-            return tweet;
+        public NodoDoblementeEnlazado siguiente { get; set; }
+        public NodoDoblementeEnlazado anterior { get; set; }
+        public Tweet tweet { get; set; }
+        public NodoDoblementeEnlazado() {
+            siguiente = null;
+            anterior = null;
+            tweet = null;
         }
     }
 }

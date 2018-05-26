@@ -1,31 +1,56 @@
-﻿<div class="col-sm-6 col-md-4 col-md-offset-4">
+﻿@model Twitter.Models.Usuario
+@{
+    Layout = "~/Views/Shared/_Layout_Registro.cshtml";
+}
+
+<div class="col-sm-6 col-md-4 col-md-offset-4">
     <div class="account-wall">
         <i class="user-img icons-faces-users-03"></i>
-        <form class="form-signin" role="form">
-            <div class="append-icon">
-                <input type="text" name="name" id="name" class="form-control form-white username" placeholder="Username" required>
-                <i class="icon-user"></i>
+        @if (Session["Mensaje_Exito"] != null && Session["Mensaje_Exito"].ToString() != "")
+    {
+        <div class="alert media fade in alert-success">
+            <p><strong>Exito!</strong> @Session["Mensaje_Exito"].</p>
+        </div>
+    Session["Mensaje_Exito"] = null;
+}
+
+        @if (Session["Mensaje_Error"] != null && Session["Mensaje_Error"].ToString() != "")
+    {
+        <div class="alert media fade in alert-danger">
+            <p><strong>Error!</strong> @Session["Mensaje_Error"].</p>
+        </div>
+    Session["Mensaje_Error"] = null;
+}
+        @using (Html.BeginForm("ValidaRegistro", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin" }))
+    {
+        <div class="append-icon">
+            <div style="display:none;">
+                @Html.LabelFor(u => u.nombreCompleto);
             </div>
-            <div class="append-icon m-b-20">
-                <input type="password" name="password" class="form-control form-white password" placeholder="Password" required>
-                <i class="icon-lock"></i>
+            @Html.TextBoxFor(u => u.nombreCompleto, new { @class = "form-control form-white username", placeholder = "Nombre Completo", autocomplete = "off", required = "true" })
+            <i class="icon-user"></i>
+        </div>
+        <div class="append-icon">
+            <div style="display:none;">
+                @Html.LabelFor(u => u.fechaNacimiento);
             </div>
-            <button type="submit" id="submit-form" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Sign In</button>
-            <div class="clearfix">
-                <p class="pull-left m-t-20"><a id="password" href="#">Forgot password?</a></p>
-                <p class="pull-right m-t-20"><a href="user-signup-v1.html">New here? Sign up</a></p>
+            @Html.TextBoxFor(u => u.fechaNacimiento, "{0:MM/dd/yyyy}", new { @class = "form-control form-white username b-datepicker", placeholder = "Fecha de Nacimiento", autocomplete = "off", required = "true" })
+            <i class="icon-calendar"></i>
+        </div>
+        <div class="append-icon">
+            <div style="display:none;">
+                @Html.LabelFor(u => u.nickname);
             </div>
-        </form>
-        <form class="form-password" role="form">
-            <div class="append-icon m-b-20">
-                <input type="password" name="password" class="form-control form-white password" placeholder="Password" required>
-                <i class="icon-lock"></i>
-            </div>
-            <button type="submit" id="submit-password" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Send Password Reset Link</button>
-            <div class="clearfix">
-                <p class="pull-left m-t-20"><a id="login" href="#">Already got an account? Sign In</a></p>
-                <p class="pull-right m-t-20"><a href="user-signup-v1.html">New here? Sign up</a></p>
-            </div>
-        </form>
+            @Html.TextBoxFor(u => u.nickname, new { @class = "form-control form-white username", placeholder = "Nickname", autocomplete = "off", required = "true" })
+            <i class="icon-user"></i>
+        </div>
+        <div class="append-icon m-b-20">
+            @Html.PasswordFor(u => u.clave, new { @class = "form-control form-white password", placeholder = "Clave", required = "true" })
+            <i class="icon-lock"></i>
+        </div>
+        <button type="submit" id="submit-form" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Registrar</button>
+
+}
+        @Html.ActionLink("Acceso", "Login", "Usuario", null, new { @class = "btn btn-block btn-lg btn-info" })
     </div>
 </div>

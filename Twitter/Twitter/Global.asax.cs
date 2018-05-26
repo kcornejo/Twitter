@@ -23,16 +23,16 @@ namespace Twitter
             String url = context.Request.Url.ToString();
             if (context.Session["Usuario"] == null)
             {
-                if (!url.Contains("Usuario/Login") && !url.Contains("Usuario/ValidaLogin"))
+                if (!url.Contains("Usuario/Login") && !url.Contains("Usuario/ValidaLogin") && !url.Contains("Usuario/Registro") && !url.Contains("Usuario/ValidaRegistro"))
                 {
-                    context.Response.Redirect("Usuario/Login");
+                    context.Response.Redirect("/Usuario/Login");
                 }
             }
             else
             {
-                if (url.Contains("Usuario/Login"))
+                if (url.Contains("Usuario/Login") || url.Contains("Usuario/Registro"))
                 {
-                    context.Response.Redirect("default.aspx");
+                    context.Response.Redirect("/Home/index");
                 }
             }
         }

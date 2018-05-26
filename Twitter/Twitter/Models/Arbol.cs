@@ -15,6 +15,7 @@ namespace Twitter.Models
         public Arbol() {
             carga_xml_usuario();
             carga_xml_seguidores();
+            carga_xml_tuits();
         }
 
         public List<dynamic> listar() {
@@ -42,7 +43,7 @@ namespace Twitter.Models
             nodo_raiz = InsertarValor(nodo_raiz, usuario);
         }
         public Nodo InsertarValor(Nodo nodo, Usuario usuario) {
-            if (nodo == null)
+            if (nodo == null || nodo.getUsuario() == null)
             {
                 nodo = new Nodo();
                 nodo.setUsuario(usuario);
@@ -312,23 +313,63 @@ namespace Twitter.Models
                 nickname = nNickName[0].InnerText;
                 XmlNodeList nTuit = nodo.GetElementsByTagName("TUIT");
                 tuit = nTuit[0].InnerText;
+                XmlNodeList nFechaHora = nodo.GetElementsByTagName("FECHA_HORA");
+                DateTime fechaHora = DateTime.Now;
+                if (nFechaHora != null && nFechaHora[0] != null)
+                {
+                    fechaHora = DateTime.ParseExact(nFechaHora[0].InnerText, "yyyy/MM/dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                }
+                Usuario usuario = this.obtiene_usuario(nickname);
+                if(usuario != null)
+                {
+                    Tweet tweet = new Tweet(usuario, tuit);
+                    tweet.fechaHora = fechaHora;
+                    usuario.tweets_muro.insertarTweet(tweet);
+                }
 
             }
         }
-        public static void inserta_xml_tuits()
+        public void inserta_xml_tuits()
         {
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Tuits_usuarios.xml");
             writer.WriteStartElement("main");
-            for (int i = 0; i < 3; i++)
-            {
-                writer.WriteStartElement("DATA_RECORD");
-                writer.WriteElementString("NICK_NAME", "2");
-                writer.WriteElementString("TUIT", "2");
-                writer.WriteEndElement();
-            }
+            this.RecorreArbolInOrdenTuits(nodo_raiz, writer);
             writer.WriteEndElement();
             writer.Flush();
+            writer.Close();
+        }
+        public void RecorreArbolInOrdenTuits(Nodo nodo, XmlWriter writer)
+        {
+            if (nodo != null)
+            {
+                if (nodo.getIzquierda() != null)
+                {
+                    RecorreArbolInOrdenTuits(nodo.getIzquierda(), writer);
+                }
+                if (nodo.getUsuario() != null)
+                {
+                    NodoDoblementeEnlazado tuitNodo = nodo.getUsuario().tweets_muro.primero;
+                     while (tuitNodo != null){
+                        if(tuitNodo != null && tuitNodo.tweet != null && tuitNodo.tweet.usuario.nickname == nodo.getUsuario().nickname)
+                        {
+                            writer.WriteStartElement("DATA_RECORD");
+                            writer.WriteElementString("NICK_NAME", tuitNodo.tweet.usuario.nickname);
+                            writer.WriteElementString("TUIT", tuitNodo.tweet.contenido);
+                            writer.WriteElementString("FECHA_HORA", String.Format("{0:yyyy/MM/dd HH:mm:ss}", tuitNodo.tweet.fechaHora));
+                            writer.WriteEndElement();
+                        }
+                        tuitNodo = tuitNodo.siguiente;
+
+                    } 
+                    
+                }
+                if (nodo.getDerecha() != null)
+                {
+                    RecorreArbolInOrdenTuits(nodo.getDerecha(), writer);
+                }
+            }
+
         }
         public void carga_xml_seguidores()
         {
@@ -381,6 +422,7 @@ namespace Twitter.Models
         }
         public void agregar_usuario(Usuario usuario)
         {
+            usuario.clave = Usuario.GenerarSha1(usuario.clave);
             this.insertar(usuario);
             this.recorre_arbol_in_orden_guardar();
         }

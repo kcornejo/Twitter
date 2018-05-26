@@ -1,5 +1,109 @@
-﻿@{
+﻿@model Twitter.Models.Usuario
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <td width="20%"><img width="60px" height="60px" class="img-circle" src="~/Content/img/@Session["Imagen"]" alt="user image"></td>
+                    <td> <h3><b>@Model.nombreCompleto</b></h3>@Model.nickname</td>
+                </tr>
+            </table>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th align="center">Tweets</th>
+                        <th align="center">Siguiendo</th>
+                        <th align="center">Seguidores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th align="center" onclick="location.href='@Url.Action("Perfil", "Home")'">@Model.cantidadTweets()</th>
+                        <th align="center" onclick="location.href='@Url.Action("Seguidos", "Home")'">@Model.cantidadSeguidos()</th>
+                        <th align="center" onclick="location.href='@Url.Action("Seguidores", "Home")'">@Model.cantidadSeguidores()</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-1">
+                <img width="40px" height="40px" class="img-circle" src="~/Content/img/@Session["Imagen"]" alt="user image">
+            </div>
+            <div class="col-md-11">
+                <textarea id="tuit" class="form-control" placeholder="¿Qué está pasando?"></textarea>
+                <br /> <br />
+                <button id="enviar_tuit" class="btn btn-blue">
+                    <i class="fa fa-send"></i>
+                    Enviar
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
 
+                <hr />
+                <br />
+                <div id="listado">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h3>A Quien Seguir</h3>
+        <hr />
+        @foreach (var item in Model.recomendaciones())
+        {
+            if (item != null)
+            {
+                <div class="row" onclick="location.href='@Url.Action("PerfilExterno", "Home", new{ username = item.nickname })'">
+                    <div class="col-md-3">
+                        <img width="40px" height="40px" class="img-circle" src="~/Content/img/@item.ubicacionSinErrorImagen()" alt="user image">
+
+                    </div>
+                    <div class="col-md-6">
+                        <p>@item.nickname</p>
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-blue" href="@Url.Action("Seguir", "Home", new { nickname = item.nickname})">
+                            <i class="fa fa-plus"></i>
+                            Seguir
+                        </a>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>
+<script src="~/Content/assets/global/plugins/jquery/jquery-3.1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function envia_tuit() {
+        var mensaje = $("#tuit").val();
+        $.post("@Url.Action("NuevoTuit", "Home")", { "mensaje": mensaje }, function () { });
+        $("#tuit").val("");
+        actualiza_tuits();
+    }
+    function actualiza_tuits() {
+        $.get("@Url.Action("ListadoTuit", "Home")", null, function (response) {
+            $("#listado").html("");
+            $.each(response, function (i, item) {
+                $("#listado").append("<div class='row' onclick=\"location.href='@Url.Action("PerfilExterno", "Home")?username="+item[3]+"'\"><div class='col-md-2'><img width='40px' class='img-circle' height='40px' src='/Content/img/" + item[2] + "'/></div><div class='col-md-8'><b>" + item[1]+"</b> ("+item[3]+")<br/>"+item[0]+"</div><div class='col-md-2'>"+item[4]+"</div></div><hr/>")
+            });
+        }, 'json');
+    }
+    $("#enviar_tuit").on("click", function () {
+        envia_tuit();
+    });
+    $(document).ready(function () {
+        actualiza_tuits();
+        setInterval(actualiza_tuits, 5000);
+    })
+</script>

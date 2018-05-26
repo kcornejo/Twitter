@@ -14,13 +14,13 @@ namespace Twitter.Models
         {
             usuario = null;
             contenido = "";
-            fechaHora = new DateTime();
+            fechaHora = DateTime.Now;
         }
         public Tweet(Usuario usuario, String contenido)
         {
             this.usuario = usuario;
             this.contenido = contenido;
-            this.fechaHora = new DateTime();
+            this.fechaHora = DateTime.Now ;
         }
     }
 }

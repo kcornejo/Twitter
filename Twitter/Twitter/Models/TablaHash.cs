@@ -32,12 +32,20 @@ namespace Twitter.Models
 
         public void Eliminar(int Clave)
         {
+            if (Clave < 0)
+            {
+                Clave = Clave * -1;
+            }
             Posicion = HashMod(Clave);
             tabla[Posicion] = null;
         }
 
         public Usuario Buscar(int Clave)
         {
+            if (Clave < 0)
+            {
+                Clave = Clave * -1;
+            }
             Posicion = HashMod(Clave);
             return tabla[Posicion];
         }

@@ -1,0 +1,46 @@
+﻿@model Twitter.Models.Usuario
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("ConfirmaEditaUsuario", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+        {
+        <table class="table">
+            <tr>
+                <td>Nombre Completo:</td>
+                <td>@Html.TextBoxFor(u => u.nombreCompleto, new { @class = "form-control ", placeholder = "Nombre Completo", autocomplete = "off", required = "true" })</td>
+            </tr>
+            <tr>
+                <td>Clave:</td>
+                <td>@Html.PasswordFor(u => u.clave, new { @class = "form-control ", placeholder = "Password", autocomplete = "off" })</td>
+            </tr>
+            <tr>
+                <td>Fecha de Nacimiento:</td>
+                <td>@Html.TextBoxFor(u => u.fechaNacimiento, "{0:MM/dd/yyyy}", new { @class = "form-control b-datepicker", placeholder = "Fecha de Nacimiento", autocomplete = "off", required = "true" })</td>
+            </tr>
+            <tr>
+                <td>Imagen de Perfil:</td>
+                <td>@Html.TextBoxFor(u => u.imagen, null, new { type = "file", @class = "input-file" })</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-lg btn-blue btn-block ladda-button" data-style="expand-left">Editar</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href="@Url.Action("EliminaUsuario", "Usuario")" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">ELIMINAR USUARIO</a>
+                </td>
+            </tr>
+        </table>
+        
+}
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>

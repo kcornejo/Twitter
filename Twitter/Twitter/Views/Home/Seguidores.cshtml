@@ -1,0 +1,96 @@
+﻿@model Twitter.Models.Usuario
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ 
+    Twitter.Models.Arbol arbol = new Twitter.Models.Arbol();
+    Twitter.Models.Usuario usuario_actual = arbol.obtiene_usuario(Session["Usuario"].ToString());
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <table class="table" onclick="location.href='@Url.Action("PerfilExterno", "Home", new { username = Model.nickname })'">
+                <tr>
+                    <td width="20%"><img width="60px" height="60px" class="img-circle" src="~/Content/img/@Model.ubicacionSinErrorImagen()" alt="user image"></td>
+                    <td> <h3><b>@Model.nombreCompleto</b></h3>@Model.nickname</td>
+                </tr>
+            </table>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th align="center">Tweets</th>
+                        <th align="center">Siguiendo</th>
+                        <th align="center">Seguidores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th align="center" onclick="location.href='@Url.Action("PerfilExterno", "Home", new { username = Model.nickname })'">@Model.cantidadTweets()</th>
+                        <th align="center" onclick="location.href='@Url.Action("Seguidos", "Home", new { username = Model.nickname })'">@Model.cantidadSeguidos()</th>
+                        <th align="center" onclick="location.href='@Url.Action("Seguidores", "Home", new { username = Model.nickname })'">@Model.cantidadSeguidores()</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3>Seguidores</h3>
+        <hr />
+        @foreach (var item in Model.getListaSeguidores())
+        {
+        <div class="row" onclick="location.href='@Url.Action("PerfilExterno", "Home", new { username = item.nickname })'">
+            <div class="col-md-2">
+                <img width='40px' height="40px" class="img-circle" src='/Content/img/@item.ubicacionSinErrorImagen()' />
+            </div>
+            <div class="col-md-8">
+                @item.nombreCompleto (@item.nickname)
+            </div>
+            <div class="col-md-2">
+                @{
+
+            if (usuario_actual.busca_seguidos(item))
+            {
+                <a class="btn btn-danger" href="@Url.Action("Seguir", "Home", new { nickname = item.nickname })">
+                    <i class="fa fa-minus"></i> Eliminar
+                </a>
+    }
+    else
+    {
+        <a class="btn btn-blue" href="@Url.Action("Seguir", "Home", new { nickname = item.nickname })">
+            <i class="fa fa-plus"></i> Seguir
+        </a>
+}
+                }
+
+            </div>
+        </div>
+}
+    </div>
+    <div class="col-md-3">
+        <h3>A Quien Seguir</h3>
+        <hr />
+        @foreach (var item in usuario_actual.recomendaciones())
+    {
+        if (item != null)
+        {
+            <div class="row" onclick="location.href='@Url.Action("PerfilExterno", "Home", new{ username = item.nickname })'">
+                <div class="col-md-3">
+                    <img width="40px" height="40px" class="img-circle" src="~/Content/img/@item.ubicacionSinErrorImagen()" alt="user image">
+
+                </div>
+                <div class="col-md-6">
+                    <p>@item.nickname</p>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-blue" href="@Url.Action("Seguir", "Home", new { nickname = item.nickname})">
+                        <i class="fa fa-plus"></i>
+                        Seguir
+                    </a>
+                </div>
+            </div>
+    }
+
+}
+    </div>
+    </div>

@@ -6,20 +6,38 @@
 <div class="col-sm-6 col-md-4 col-md-offset-4">
     <div class="account-wall">
         <i class="user-img icons-faces-users-03"></i>
+
+        @if (Session["Mensaje_Exito"] != null && Session["Mensaje_Exito"].ToString() != "")
+    {
+        <div class="alert media fade in alert-success">
+            <p><strong>Exito!</strong> @Session["Mensaje_Exito"].</p>
+        </div>
+    Session["Mensaje_Exito"] = null;
+}
+
+        @if (Session["Mensaje_Error"] != null && Session["Mensaje_Error"].ToString() != "")
+    {
+        <div class="alert media fade in alert-danger">
+            <p><strong>Error!</strong> @Session["Mensaje_Error"].</p>
+        </div>
+    Session["Mensaje_Error"] = null;
+}
         @using (Html.BeginForm("ValidaLogin", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin" }))
     {
         <div class="append-icon">
             <div style="display:none;">
                 @Html.LabelFor(u => u.nickname);
             </div>
-            @Html.TextBoxFor(u => u.nickname, new { @class = "form-control form-white username", placeholder = "Nickname", autocomplete = "off" })
+            @Html.TextBoxFor(u => u.nickname, new { @class = "form-control form-white username", placeholder = "Nickname", autocomplete = "off", required = "true" })
             <i class="icon-user"></i>
         </div>
         <div class="append-icon m-b-20">
-            @Html.PasswordFor(u => u.clave, new { @class = "form-control form-white password", placeholder = "Clave" })
+            @Html.PasswordFor(u => u.clave, new { @class = "form-control form-white password", placeholder = "Clave", required = "true" })
             <i class="icon-lock"></i>
         </div>
         <button type="submit" id="submit-form" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Acceso</button>
+
 }
+        @Html.ActionLink("Registrar", "Registro", "Usuario", null, new { @class = "btn btn-block btn-lg btn-info" })
     </div>
 </div>

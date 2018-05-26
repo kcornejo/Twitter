@@ -16,9 +16,9 @@
         <!-- BEGIN SIDEBAR -->
         <div class="sidebar">
             <div class="logopanel">
-                <h1>
-                    <a href="dashboard.html"></a>
-                </h1>
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/img/logo.jpg" width="80px"/>
+                </a>
             </div>
             
         </div>
@@ -29,94 +29,19 @@
                 <div class="header-right">
                     <ul class="header-menu nav navbar-nav">
                        
-                        <!-- BEGIN NOTIFICATION DROPDOWN -->
-                        <li class="dropdown" id="notifications-header">
-                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="icon-bell"></i>
-                                <span class="badge badge-danger badge-header">6</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header clearfix">
-                                    <p class="pull-left">12 Pending Notifications</p>
-                                </li>
-                                <li>
-                                    <ul class="dropdown-menu-list withScroll" data-height="220">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-star p-r-10 f-18 c-orange"></i>
-                                                Steve have rated your photo
-                                                <span class="dropdown-time">Just now</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-heart p-r-10 f-18 c-red"></i>
-                                                John added you to his favs
-                                                <span class="dropdown-time">15 mins</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-file-text p-r-10 f-18"></i>
-                                                New document available
-                                                <span class="dropdown-time">22 mins</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-picture-o p-r-10 f-18 c-blue"></i>
-                                                New picture added
-                                                <span class="dropdown-time">40 mins</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-bell p-r-10 f-18 c-orange"></i>
-                                                Meeting in 1 hour
-                                                <span class="dropdown-time">1 hour</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-bell p-r-10 f-18"></i>
-                                                Server 5 overloaded
-                                                <span class="dropdown-time">2 hours</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-comment p-r-10 f-18 c-gray"></i>
-                                                Bill comment your post
-                                                <span class="dropdown-time">3 hours</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-picture-o p-r-10 f-18 c-blue"></i>
-                                                New picture added
-                                                <span class="dropdown-time">2 days</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-footer clearfix">
-                                    <a href="#" class="pull-left">See all notifications</a>
-                                    <a href="#" class="pull-right">
-                                        <i class="icon-settings"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                         <!-- END NOTIFICATION DROPDOWN -->
                         <!-- BEGIN USER DROPDOWN -->
                         <li class="dropdown" id="user-header">
                             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img src="~/Content/assets/global/images/avatars/user1.png" alt="user image">
+                                <img src="~/Content/img/@Session["Imagen"]" width="40px" height="40px" alt="user image">
                                 <span class="username">@Session["Usuario"]</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#"><i class="icon-user"></i><span>Mi Perfil</span></a>
+                                    <a href="@Url.Action("Perfil", "Home")"><i class="icon-user"></i><span>Mi Perfil</span></a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("EditaUsuario", "Home")"><i class="icon-pencil"></i><span>Editar Perfil</span></a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Logout", "Usuario")"><i class="icon-logout"></i><span>Cerrar Sesion</span></a>
@@ -131,25 +56,35 @@
             <!-- END TOPBAR -->
             <!-- BEGIN PAGE CONTENT -->
             <div class="page-content">
-                <div class="header">
-                    <h2><strong>Blank</strong> Page</h2>
-                    <div class="breadcrumb-wrapper">
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="dashboard.html">Make</a>
-                            </li>
-                            <li>
-                                <a href="#">Pages</a>
-                            </li>
-                            <li class="active">Dashboard</li>
-                        </ol>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-lg-12" style="height:720px">
-                        @RenderBody()
+                    <div class="col-md-12">
+                        @if (Session["Mensaje_Exito"] != null && Session["Mensaje_Exito"].ToString() != "")
+                        {
+                            <div class="alert media fade in alert-success">
+                                <p><strong>Exito!</strong> @Session["Mensaje_Exito"].</p>
+                            </div>
+                            Session["Mensaje_Exito"] = null;
+                        }
+                        
+                        @if (Session["Mensaje_Error"] != null && Session["Mensaje_Error"].ToString() != "")
+                        {
+                            <div class="alert media fade in alert-danger">
+                                <p><strong>Error!</strong> @Session["Mensaje_Error"].</p>
+                            </div>
+                            Session["Mensaje_Error"] = null;
+                        }
                     </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <center>
+                            <input type="text" id="busqueda" class="form-control " placeholder="Busqueda..." url="@Url.Action("Busqueda", "Home")" url_perfil="@Url.Action("PerfilExterno", "Home")" />
+                            <div id="resultado" class="row"></div>
+                        </center>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-12"><hr /></div>
                 </div>
+                @RenderBody()
                 <div class="footer">
                     <div class="copyright">
                         <p class="pull-left sm-pull-reset">

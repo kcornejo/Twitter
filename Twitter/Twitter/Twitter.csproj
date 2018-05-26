@@ -4014,6 +4014,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\avatar1.png" />
+    <Content Include="Content\img\logo.jpg" />
+    <Content Include="Content\umgScript.js" />
     <Content Include="Content\XML\Tuits_usuarios.xml" />
     <Content Include="Content\XML\Usuarios_seguidos.xml" />
     <Content Include="favicon.ico" />
@@ -4441,6 +4444,12 @@
     <Content Include="Content\assets\global\plugins\visible\bower.json" />
     <Content Include="Content\assets\global\plugins\visible\df-visible.jquery.json" />
     <Content Include="Content\assets\global\plugins\visible\README.markdown" />
+    <Content Include="Views\Home\EditaUsuario.cshtml" />
+    <Content Include="Views\Home\Seguidos.cshtml" />
+    <Content Include="Views\Home\PerfilExterno.cshtml" />
+    <Content Include="Views\Home\Busqueda.cshtml" />
+    <None Include="Views\Home\Seguidores.cshtml" />
+    <None Include="Views\Home\Perfil.cshtml" />
     <None Include="Views\Usuario\Login.cshtml" />
     <None Include="Views\Usuario\Registro.cshtml" />
     <Content Include="Content\XML\Usuarios.xml" />
@@ -4455,8 +4464,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
