@@ -10,6 +10,7 @@ namespace Twitter.Models
         private Nodo izquierda;
         private Nodo derecha;
         private Usuario usuario;
+        public int fe { get; set; }
         public Nodo getIzquierda()
         {
             return izquierda;
@@ -36,12 +37,14 @@ namespace Twitter.Models
             derecha = null;
             izquierda = null;
             usuario = null;
+            fe = 0;
         }
         public Nodo(Nodo derecha, Nodo izquierda, Usuario usuario)
         {
             this.derecha = derecha;
             this.izquierda = izquierda;
             this.usuario = usuario;
+            fe = 0;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
 
 namespace Twitter.Models
 {
@@ -17,7 +18,105 @@ namespace Twitter.Models
             carga_xml_seguidores();
             carga_xml_tuits();
         }
+        public void inserta_texto(String texto)
+        {
+            string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            String path = assemblyFile + "/../../Content/Bitacora/Bitacora.txt";
+            if (!System.IO.File.Exists(path))
+            {
+                System.IO.File.Create(path);
+            }
+            try
+            {
+                TextWriter tw = new StreamWriter(path, true);
+                tw.WriteLine(texto);
+                tw.Close();
+            }catch(Exception e)
+            {
 
+            }
+           
+        }
+        private Nodo rotacionII(Nodo n, Nodo n1)
+        {
+            n.setIzquierda(n1.getDerecha());
+            n1.setDerecha(n);
+            // actualización de los factores de equilibrio
+            if (n1.fe == -1) // se cumple en la inserción
+            {
+                n.fe = 0;
+                n1.fe = 0;
+            }
+            else
+            {
+                n.fe = -1;
+                n1.fe = 1;
+            }
+            return n1;
+        }
+
+
+        private Nodo rotacionDD(Nodo n, Nodo n1)
+        {
+            n.setDerecha(n1.getIzquierda());
+            n1.setIzquierda(n);
+            // actualización de los factores de equilibrio
+            if (n1.fe == +1) // se cumple en la inserción
+            {
+                n.fe = 0;
+                n1.fe = 0;
+            }
+            else
+            {
+                n.fe = +1;
+                n1.fe = -1;
+            }
+            return n1;
+        }
+
+
+        private Nodo rotacionID(Nodo n, Nodo n1)
+        {
+            Nodo n2;
+            n2 = (Nodo)n1.getDerecha();
+            n.setIzquierda(n2.getDerecha());
+            n2.setDerecha(n);
+            n1.setDerecha(n2.getIzquierda());
+            n2.setIzquierda(n1);
+            // actualización de los factores de equilibrio
+            if (n2.fe == +1)
+                n1.fe = -1;
+            else
+                n1.fe = 0;
+            if (n2.fe == -1)
+                n.fe = 1;
+            else
+                n.fe = 0;
+            n2.fe = 0;
+            return n2;
+        }
+
+
+        private Nodo rotacionDI(Nodo n, Nodo n1)
+        {
+            Nodo n2;
+            n2 = (Nodo)n1.getIzquierda();
+            n.setDerecha(n2.getIzquierda());
+            n2.setIzquierda(n);
+            n1.setIzquierda(n2.getDerecha());
+            n2.setDerecha(n1);
+            // actualización de los factores de equilibrio
+            if (n2.fe == +1)
+                n.fe = -1;
+            else
+                n.fe = 0;
+            if (n2.fe == -1)
+                n1.fe = 1;
+            else
+                n1.fe = 0;
+            n2.fe = 0;
+            return n2;
+        }
         public List<dynamic> listar() {
             var lista = new List<dynamic>();
             lista = InOrden(nodo_raiz, lista);
@@ -40,24 +139,85 @@ namespace Twitter.Models
         }
 
         public void insertar(Usuario usuario) {
-            nodo_raiz = InsertarValor(nodo_raiz, usuario);
+            Logical h = new Logical(false);
+            nodo_raiz = InsertarValor(nodo_raiz, usuario, h);
         }
-        public Nodo InsertarValor(Nodo nodo, Usuario usuario) {
+        public Nodo InsertarValor(Nodo nodo, Usuario usuario, Logical h) {
+            Nodo n1;
             if (nodo == null || nodo.getUsuario() == null)
             {
                 nodo = new Nodo();
                 nodo.setUsuario(usuario);
+                h.setLogical(true);
+
             } else if (Comparador.menor_que(usuario, nodo.getUsuario()))
             {
                 Nodo izquierda;
-                izquierda = InsertarValor(nodo.getIzquierda(), usuario);
+                izquierda = InsertarValor(nodo.getIzquierda(), usuario, h);
                 nodo.setIzquierda(izquierda);
+                if (h.booleanValue())
+                {
+                    // decrementa el fe por aumentar la altura de rama izquierda
+                    switch (nodo.fe)
+                    {
+                        case 1:
+                            nodo.fe = 0;
+                            h.setLogical(false);
+                            break;
+                        case 0:
+                            nodo.fe = -1;
+                            break;
+                        case -1: // aplicar rotación a la izquierda
+                            n1 = (Nodo)nodo.getIzquierda();
+                            if (n1.fe == -1)
+                            {
+                                nodo = rotacionII(nodo, n1);
+                                this.inserta_texto("Factor de equilibrio = -2; Nodos en Rotacion ="+nodo.getUsuario().nickname+","+ n1.getUsuario().nickname + " Rotacion II");
+                            }
+                            else
+                            {
+                                nodo = rotacionID(nodo, n1);
+                                this.inserta_texto("Factor de equilibrio = -2; Nodos en Rotacion =" + nodo.getUsuario().nickname + "," + n1.getUsuario().nickname + " Rotacion ID");
+                            }
+                               
+                            h.setLogical(false);
+                            break;
+                    }
+                }
             }
             else if (Comparador.mayor_que(usuario, nodo.getUsuario()))
             {
                 Nodo derecha;
-                derecha = InsertarValor(nodo.getDerecha(), usuario);
+                derecha = InsertarValor(nodo.getDerecha(), usuario, h);
                 nodo.setDerecha(derecha);
+                if (h.booleanValue())
+                {
+                    // incrementa el fe por aumentar la altura de rama izquierda
+                    switch (nodo.fe)
+                    {
+                        case 1: // aplicar rotación a la derecha
+                            n1 = (Nodo)nodo.getDerecha();
+                            if (n1.fe == +1)
+                            {
+                                nodo = rotacionDD(nodo, n1);
+                                this.inserta_texto("Factor de equilibrio = 2; Nodos en Rotacion =" + nodo.getUsuario().nickname + "," + n1.getUsuario().nickname + " Rotacion DD");
+                            }
+                            else
+                            {
+                                nodo = rotacionDI(nodo, n1);
+                                this.inserta_texto("Factor de equilibrio = 2; Nodos en Rotacion =" + nodo.getUsuario().nickname + "," + n1.getUsuario().nickname + " Rotacion DI");
+                            }
+                            h.setLogical(false);
+                            break;
+                        case 0:
+                            nodo.fe = +1;
+                            break;
+                        case -1:
+                            nodo.fe = 0;
+                            h.setLogical(false);
+                            break;
+                    }
+                }
             }
             else
             {
