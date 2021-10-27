@@ -2382,11 +2382,10 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   color: #ffffff;
 }
 body:not(.sidebar-fixed, .topbar-fixed) .sidebar .logopanel {
-  background: #202226;
+  background: #fff;
   height: 50px;
   left: 0;
   padding: 10px;
-  position: absolute;
   right: auto;
   top: -50px;
   width: 240px;
