@@ -430,6 +430,7 @@ namespace Twitter.Models
         }
         public void recorre_arbol_in_orden_guardar()
         {
+            string test = System.AppContext.BaseDirectory;
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Usuarios.xml");
             writer.WriteStartElement("main");
@@ -491,6 +492,7 @@ namespace Twitter.Models
         }
         public void inserta_xml_tuits()
         {
+            string test = System.AppContext.BaseDirectory;
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             XmlWriter writer = XmlWriter.Create(assemblyFile + "/../../Content/XML/Tuits_usuarios.xml");
             writer.WriteStartElement("main");
