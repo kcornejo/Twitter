@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Twitter.Models
+﻿namespace Twitter.Models
 {
     public class Nodo
     {
@@ -15,7 +10,8 @@ namespace Twitter.Models
         {
             return izquierda;
         }
-        public void setIzquierda(Nodo izquierda) {
+        public void setIzquierda(Nodo izquierda)
+        {
             this.izquierda = izquierda;
         }
         public Nodo getDerecha()
@@ -26,14 +22,16 @@ namespace Twitter.Models
         {
             this.derecha = derecha;
         }
-        public Usuario getUsuario() {
+        public Usuario getUsuario()
+        {
             return usuario;
         }
         public void setUsuario(Usuario usuario)
         {
             this.usuario = usuario;
         }
-        public Nodo() {
+        public Nodo()
+        {
             derecha = null;
             izquierda = null;
             usuario = null;

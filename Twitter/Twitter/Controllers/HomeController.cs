@@ -10,18 +10,19 @@ namespace Twitter.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Busqueda(String valor) {
-            if(valor == null || valor == "")
+        public ActionResult Busqueda(String valor)
+        {
+            if (valor == null || valor == "")
             {
                 return new EmptyResult();
             }
             Arbol arbol = new Arbol();
             List<dynamic> listado_completo = arbol.listar();
-            String[,] listado = new String[10,3];
+            String[,] listado = new String[10, 3];
             int contador = 0;
-            foreach(var item in listado_completo)
+            foreach (var item in listado_completo)
             {
-                if((item.nickname.IndexOf(valor, 0, StringComparison.CurrentCultureIgnoreCase) != -1 || item.nombreCompleto.IndexOf(valor, 0, StringComparison.CurrentCultureIgnoreCase) != -1) && contador < 10 && item.nickname != Session["Usuario"])
+                if ((item.nickname.IndexOf(valor, 0, StringComparison.CurrentCultureIgnoreCase) != -1 || item.nombreCompleto.IndexOf(valor, 0, StringComparison.CurrentCultureIgnoreCase) != -1) && contador < 10 && item.nickname != Session["Usuario"])
                 {
                     listado[contador, 0] = item.nickname;
                     listado[contador, 1] = item.nombreCompleto;
@@ -62,7 +63,7 @@ namespace Twitter.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
         }
         public ActionResult Seguidores(String username)
         {
@@ -114,14 +115,14 @@ namespace Twitter.Controllers
                 primero = primero.siguiente;
 
             }
-            if(tweet != null)
+            if (tweet != null)
             {
                 usuario.tweets_muro.eliminar(tweet);
                 arbol.modifica_usuario(usuario);
                 arbol.inserta_xml_tuits();
-                for (int i = 0; i< 1027; i++)
+                for (int i = 0; i < 1027; i++)
                 {
-                    if(usuario.seguidores.Buscar(i) != null)
+                    if (usuario.seguidores.Buscar(i) != null)
                     {
                         usuario.seguidores.Buscar(i).tweets_muro.eliminar(tweet);
                         arbol.modifica_usuario(usuario.seguidores.Buscar(i));
@@ -148,21 +149,21 @@ namespace Twitter.Controllers
                 tamanio++;
                 primero = primero.siguiente;
             }
-            String[,] listado = new String[tamanio,5];
+            String[,] listado = new String[tamanio, 5];
             NodoDoblementeEnlazado ultimo = usuario.tweets_muro.ultimo;
             int contador = 0;
             string assemblyFile = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             List<Tweet> listado_tweet = new List<Tweet>();
             //filling the counts
-            
-            while(ultimo != null)
+
+            while (ultimo != null)
             {
                 listado_tweet.Add(ultimo.tweet);
                 ultimo = ultimo.anterior;
             }
             listado_tweet = listado_tweet.OrderByDescending(lc => lc.fechaHora).ToList();
             ultimo = usuario.tweets_muro.ultimo;
-            foreach(var tweet in listado_tweet)
+            foreach (var tweet in listado_tweet)
             {
                 listado[contador, 0] = tweet.contenido;
                 listado[contador, 1] = tweet.usuario.nombreCompleto;
@@ -174,7 +175,8 @@ namespace Twitter.Controllers
             string json = JsonConvert.SerializeObject(listado);
             return Content(json, "application/json");
         }
-        public ActionResult ListadoTuitPropios() {
+        public ActionResult ListadoTuitPropios()
+        {
             Arbol arbol = new Arbol();
             String username = Session["Usuario"].ToString();
             Usuario usuario = arbol.obtiene_usuario(username);
@@ -182,7 +184,7 @@ namespace Twitter.Controllers
             NodoDoblementeEnlazado primero = usuario.tweets_muro.primero;
             while (primero != null)
             {
-                if(primero.tweet.usuario.nickname == username)
+                if (primero.tweet.usuario.nickname == username)
                 {
                     tamanio++;
                 }
@@ -210,7 +212,7 @@ namespace Twitter.Controllers
                     contador++;
                 }
                 ultimo = ultimo.anterior;
-               
+
             }
             string json = JsonConvert.SerializeObject(listado);
             return Content(json, "application/json");
@@ -219,7 +221,7 @@ namespace Twitter.Controllers
         {
             Arbol arbol = new Arbol();
             Usuario usuario = arbol.obtiene_usuario(username);
-            if(usuario == null)
+            if (usuario == null)
             {
                 return new EmptyResult();
             }
@@ -273,7 +275,7 @@ namespace Twitter.Controllers
             Arbol arbol = new Arbol();
             String username = Session["Usuario"].ToString();
             HttpPostedFileBase file = usuario.imagen;
-            
+
             Usuario usuario_viejo = arbol.obtiene_usuario(username);
             usuario_viejo.nombreCompleto = usuario.nombreCompleto;
             usuario_viejo.fechaNacimiento = usuario.fechaNacimiento;
@@ -299,7 +301,7 @@ namespace Twitter.Controllers
             String username = Session["Usuario"].ToString();
             Usuario usuario = arbol.obtiene_usuario(username);
             Usuario usuario_seguir = arbol.obtiene_usuario(nickname);
-            if(usuario != null && usuario_seguir != null)
+            if (usuario != null && usuario_seguir != null)
             {
                 if (usuario.busca_seguidos(usuario_seguir))
                 {
@@ -313,7 +315,7 @@ namespace Twitter.Controllers
                     usuario_seguir.seguidores.Insertar(usuario, usuario.nickname.GetHashCode());
                     Session["Mensaje_Exito"] = "Usuario seguido correctamente";
                 }
-                
+
                 arbol.modifica_usuario(usuario);
                 arbol.modifica_usuario(usuario_seguir);
                 arbol.recorre_arbol_in_orden_seguidores();

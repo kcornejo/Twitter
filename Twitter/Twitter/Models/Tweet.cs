@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Twitter.Models
 {
@@ -20,7 +17,7 @@ namespace Twitter.Models
         {
             this.usuario = usuario;
             this.contenido = contenido;
-            this.fechaHora = DateTime.Now ;
+            this.fechaHora = DateTime.Now;
         }
     }
 }

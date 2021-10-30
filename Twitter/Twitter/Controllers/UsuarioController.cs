@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 using Twitter.Models;
 namespace Twitter.Controllers
@@ -19,7 +15,8 @@ namespace Twitter.Controllers
         {
             return View();
         }
-        public ActionResult ValidaRegistro(Usuario usuario) {
+        public ActionResult ValidaRegistro(Usuario usuario)
+        {
             Arbol arbol = new Arbol();
             if (arbol.obtiene_usuario(usuario.nickname) == null)
             {
@@ -43,7 +40,7 @@ namespace Twitter.Controllers
             return RedirectToAction("Login", "Usuario");
         }
         [HttpPost]
-        public ActionResult ValidaLogin(Usuario usuario )
+        public ActionResult ValidaLogin(Usuario usuario)
         {
             Arbol arbol = new Arbol();
             Usuario valida = arbol.valida_sesion(usuario.nickname, usuario.clave);
@@ -58,7 +55,8 @@ namespace Twitter.Controllers
             Session["Mensaje_Error"] = "Problema de credenciales";
             return RedirectToAction("Login", "Usuario");
         }
-        public ActionResult EliminaUsuario() {
+        public ActionResult EliminaUsuario()
+        {
             Arbol arbol = new Arbol();
             Usuario usuario = arbol.obtiene_usuario(Session["Usuario"].ToString());
             if (usuario != null)

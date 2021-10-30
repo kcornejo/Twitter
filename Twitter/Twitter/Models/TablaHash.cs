@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Twitter.Models
+﻿namespace Twitter.Models
 {
     public class TablaHash
     {
@@ -19,12 +14,12 @@ namespace Twitter.Models
 
         public void Insertar(Usuario Dato, int Clave)
         {
-            if(Clave < 0)
+            if (Clave < 0)
             {
                 Clave = Clave * -1;
             }
             Posicion = HashMod(Clave);
-            if(Posicion < 1027)
+            if (Posicion < 1027)
             {
                 tabla[Posicion] = Dato;
             }

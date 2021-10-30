@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Twitter.Models
+﻿namespace Twitter.Models
 {
     public class ListaDoblementeEnlazada
     {
@@ -15,10 +10,10 @@ namespace Twitter.Models
             primero = null;
             ultimo = null;
         }
-       
+
         public void insertar(NodoDoblementeEnlazado nodo)
         {
-            if(primero == null || ultimo == null)
+            if (primero == null || ultimo == null)
             {
                 primero = nodo;
                 ultimo = nodo;
@@ -55,14 +50,16 @@ namespace Twitter.Models
         }
         public NodoDoblementeEnlazado EliminarNodo(NodoDoblementeEnlazado nodo, Tweet tweet)
         {
-            if(nodo.tweet.contenido == tweet.contenido && nodo.tweet.fechaHora == tweet.fechaHora)
+            if (nodo.tweet.contenido == tweet.contenido && nodo.tweet.fechaHora == tweet.fechaHora)
             {
                 nodo = nodo.siguiente;
-                if(nodo.anterior != null)
+                if (nodo.anterior != null)
                 {
                     nodo.anterior.siguiente = nodo;
                 }
-            }else {
+            }
+            else
+            {
                 nodo.siguiente = EliminarNodo(nodo.siguiente, tweet);
             }
             return nodo;

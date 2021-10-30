@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Xml;
 using System.IO;
+using System.Reflection;
+using System.Xml;
 
 namespace Twitter.Models
 {
@@ -13,7 +10,8 @@ namespace Twitter.Models
     {
         private Nodo nodo_raiz;
 
-        public Arbol() {
+        public Arbol()
+        {
             carga_xml_usuario();
             carga_xml_seguidores();
             carga_xml_tuits();
@@ -31,11 +29,14 @@ namespace Twitter.Models
                 TextWriter tw = new StreamWriter(path, true);
                 tw.WriteLine(texto);
                 tw.Close();
-            }catch(Exception e)
+#pragma warning disable CS0168 // The variable 'e' is declared but never used
+            }
+            catch (Exception e)
+#pragma warning restore CS0168 // The variable 'e' is declared but never used
             {
 
             }
-           
+
         }
         private Nodo rotacionII(Nodo n, Nodo n1)
         {
@@ -117,12 +118,14 @@ namespace Twitter.Models
             n2.fe = 0;
             return n2;
         }
-        public List<dynamic> listar() {
+        public List<dynamic> listar()
+        {
             var lista = new List<dynamic>();
             lista = InOrden(nodo_raiz, lista);
             return lista;
         }
-        public List<dynamic> InOrden(Nodo nodo, List<dynamic> listado_usuario) {
+        public List<dynamic> InOrden(Nodo nodo, List<dynamic> listado_usuario)
+        {
             if (nodo != null && nodo.getUsuario() != null)
             {
                 if (nodo.getIzquierda() != null)
@@ -138,11 +141,13 @@ namespace Twitter.Models
             return listado_usuario;
         }
 
-        public void insertar(Usuario usuario) {
+        public void insertar(Usuario usuario)
+        {
             Logical h = new Logical(false);
             nodo_raiz = InsertarValor(nodo_raiz, usuario, h);
         }
-        public Nodo InsertarValor(Nodo nodo, Usuario usuario, Logical h) {
+        public Nodo InsertarValor(Nodo nodo, Usuario usuario, Logical h)
+        {
             Nodo n1;
             if (nodo == null || nodo.getUsuario() == null)
             {
@@ -150,7 +155,8 @@ namespace Twitter.Models
                 nodo.setUsuario(usuario);
                 h.setLogical(true);
 
-            } else if (Comparador.menor_que(usuario, nodo.getUsuario()))
+            }
+            else if (Comparador.menor_que(usuario, nodo.getUsuario()))
             {
                 Nodo izquierda;
                 izquierda = InsertarValor(nodo.getIzquierda(), usuario, h);
@@ -172,14 +178,14 @@ namespace Twitter.Models
                             if (n1.fe == -1)
                             {
                                 nodo = rotacionII(nodo, n1);
-                                this.inserta_texto("Factor de equilibrio = -2; Nodos en Rotacion ="+nodo.getUsuario().nickname+","+ n1.getUsuario().nickname + " Rotacion II");
+                                this.inserta_texto("Factor de equilibrio = -2; Nodos en Rotacion =" + nodo.getUsuario().nickname + "," + n1.getUsuario().nickname + " Rotacion II");
                             }
                             else
                             {
                                 nodo = rotacionID(nodo, n1);
                                 this.inserta_texto("Factor de equilibrio = -2; Nodos en Rotacion =" + nodo.getUsuario().nickname + "," + n1.getUsuario().nickname + " Rotacion ID");
                             }
-                               
+
                             h.setLogical(false);
                             break;
                     }
@@ -225,7 +231,8 @@ namespace Twitter.Models
             }
             return nodo;
         }
-        public void eliminar_nodo(Usuario usuario) {
+        public void eliminar_nodo(Usuario usuario)
+        {
             nodo_raiz = BusquedaEliminarNodo(nodo_raiz, usuario);
         }
         public Nodo BusquedaEliminarNodo(Nodo nodo, Usuario usuario)
@@ -258,7 +265,8 @@ namespace Twitter.Models
             if (nodo.getIzquierda() == null && nodo.getDerecha() != null)
             {
                 nodo = nodo.getDerecha();
-            } else if (nodo.getDerecha() == null && nodo.getIzquierda() != null)
+            }
+            else if (nodo.getDerecha() == null && nodo.getIzquierda() != null)
             {
                 nodo = nodo.getIzquierda();
             }
@@ -287,7 +295,8 @@ namespace Twitter.Models
                 Nodo izquierda;
                 izquierda = RemplazoMenor(nodo.getIzquierda(), nodo_menor);
                 nodo.setIzquierda(izquierda);
-            } else if (nodo.getDerecha() != null && nodo.getIzquierda() == null)
+            }
+            else if (nodo.getDerecha() != null && nodo.getIzquierda() == null)
             {
                 Nodo derecha;
                 derecha = RemplazoMenor(nodo.getDerecha(), nodo_menor);
@@ -364,20 +373,24 @@ namespace Twitter.Models
             return null;
         }
 
-        public Usuario valida_sesion(String nickname, String clave) {
+        public Usuario valida_sesion(String nickname, String clave)
+        {
             Usuario usuario_comodin = new Usuario("", clave, nickname, "", new DateTime());
             return Sesion(nodo_raiz, usuario_comodin);
         }
-        public Usuario Sesion(Nodo nodo, Usuario usuario) { 
+        public Usuario Sesion(Nodo nodo, Usuario usuario)
+        {
             if (nodo != null)
             {
                 if (nodo.getUsuario().nickname == usuario.nickname)
                 {
-                    if (nodo.getUsuario().clave == Usuario.GenerarSha1(usuario.clave)){
+                    if (nodo.getUsuario().clave == Usuario.GenerarSha1(usuario.clave))
+                    {
                         return nodo.getUsuario();
                     }
                     return null;
-                } else if (Comparador.mayor_que(usuario, nodo.getUsuario()))
+                }
+                else if (Comparador.mayor_que(usuario, nodo.getUsuario()))
                 {
                     return Sesion(nodo.getDerecha(), usuario);
                 }
@@ -419,14 +432,14 @@ namespace Twitter.Models
                 XmlNodeList nFoto = nodo.GetElementsByTagName("FOTO");
                 foto = nFoto[0].InnerText;
                 XmlNodeList nPassword = nodo.GetElementsByTagName("PASSWORD");
-                if(nPassword != null && nPassword[0] != null)
+                if (nPassword != null && nPassword[0] != null)
                 {
                     password = nPassword[0].InnerText;
                 }
                 usuario = new Usuario(nombre, password, nickname, foto, fecha);
                 this.insertar(usuario);
             }
-            
+
         }
         public void recorre_arbol_in_orden_guardar()
         {
@@ -439,12 +452,13 @@ namespace Twitter.Models
             writer.Flush();
             writer.Close();
         }
-        public void RecorreArbolInOrdenGuardar(Nodo nodo, XmlWriter writer) {
-            if(nodo.getIzquierda() != null)
+        public void RecorreArbolInOrdenGuardar(Nodo nodo, XmlWriter writer)
+        {
+            if (nodo.getIzquierda() != null)
             {
                 RecorreArbolInOrdenGuardar(nodo.getIzquierda(), writer);
             }
-            if(nodo.getUsuario() != null)
+            if (nodo.getUsuario() != null)
             {
                 writer.WriteStartElement("DATA_RECORD");
                 writer.WriteElementString("NOMBRE", nodo.getUsuario().nombreCompleto);
@@ -481,7 +495,7 @@ namespace Twitter.Models
                     fechaHora = DateTime.ParseExact(nFechaHora[0].InnerText, "yyyy/MM/dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                 }
                 Usuario usuario = this.obtiene_usuario(nickname);
-                if(usuario != null)
+                if (usuario != null)
                 {
                     Tweet tweet = new Tweet(usuario, tuit);
                     tweet.fechaHora = fechaHora;
@@ -512,8 +526,9 @@ namespace Twitter.Models
                 if (nodo.getUsuario() != null)
                 {
                     NodoDoblementeEnlazado tuitNodo = nodo.getUsuario().tweets_muro.primero;
-                     while (tuitNodo != null){
-                        if(tuitNodo != null && tuitNodo.tweet != null && tuitNodo.tweet.usuario.nickname == nodo.getUsuario().nickname)
+                    while (tuitNodo != null)
+                    {
+                        if (tuitNodo != null && tuitNodo.tweet != null && tuitNodo.tweet.usuario.nickname == nodo.getUsuario().nickname)
                         {
                             writer.WriteStartElement("DATA_RECORD");
                             writer.WriteElementString("NICK_NAME", tuitNodo.tweet.usuario.nickname);
@@ -523,8 +538,8 @@ namespace Twitter.Models
                         }
                         tuitNodo = tuitNodo.siguiente;
 
-                    } 
-                    
+                    }
+
                 }
                 if (nodo.getDerecha() != null)
                 {
@@ -552,7 +567,7 @@ namespace Twitter.Models
                 nicknameSeguido = nNickNameSeguido[0].InnerText;
                 usuario = this.obtiene_usuario(nickname);
                 usuarioSeguido = this.obtiene_usuario(nicknameSeguido);
-                if(usuario!= null && usuarioSeguido != null)
+                if (usuario != null && usuarioSeguido != null)
                 {
                     usuario.seguidos.Insertar(usuarioSeguido, usuarioSeguido.nickname.GetHashCode());
                     usuarioSeguido.seguidores.Insertar(usuario, usuario.nickname.GetHashCode());
@@ -573,7 +588,7 @@ namespace Twitter.Models
         {
             Usuario objetoUsuario = this.obtiene_usuario(usuario);
             Usuario objetoUsuarioSeguir = this.obtiene_usuario(usuarioSeguir);
-            if(objetoUsuarioSeguir != null && objetoUsuario != null)
+            if (objetoUsuarioSeguir != null && objetoUsuario != null)
             {
                 objetoUsuario.seguidos.Insertar(objetoUsuarioSeguir, objetoUsuarioSeguir.nickname.GetHashCode());
                 this.modifica_usuario(objetoUsuario);
@@ -591,7 +606,7 @@ namespace Twitter.Models
 
         public void RecorreArbolInOrdenSeguidores(Nodo nodo, XmlWriter writer)
         {
-            if(nodo != null)
+            if (nodo != null)
             {
                 if (nodo.getIzquierda() != null)
                 {
@@ -622,7 +637,7 @@ namespace Twitter.Models
                     RecorreArbolInOrdenSeguidores(nodo.getDerecha(), writer);
                 }
             }
-            
+
         }
     }
 }
